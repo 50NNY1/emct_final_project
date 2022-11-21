@@ -1,0 +1,1077 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						30
+					]
+				},
+				{
+					"build" : "_deps/ftxui-build",
+					"childIndexes" : 
+					[
+						2,
+						5
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.ftxui-build-Debug-275c3dc857e2a79314fd.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "build/_deps/ftxui-src",
+					"targetIndexes" : 
+					[
+						28,
+						29,
+						102
+					]
+				},
+				{
+					"build" : "_deps/ftxui-build/examples",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"jsonFile" : "directory-_deps.ftxui-build.examples-Debug-12562b416b93e25c388c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "build/_deps/ftxui-src/examples"
+				},
+				{
+					"build" : "_deps/ftxui-build/examples/component",
+					"jsonFile" : "directory-_deps.ftxui-build.examples.component-Debug-6d5c9096bd0a158664a3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "build/_deps/ftxui-src/examples/component",
+					"targetIndexes" : 
+					[
+						33,
+						34,
+						35,
+						36,
+						38,
+						39,
+						40,
+						41,
+						46,
+						47,
+						49,
+						50,
+						51,
+						52,
+						58,
+						60,
+						61,
+						62,
+						63,
+						64,
+						65,
+						66,
+						67,
+						68,
+						69,
+						70,
+						71,
+						72,
+						75,
+						76,
+						77,
+						78,
+						79,
+						83,
+						84,
+						85,
+						94,
+						95,
+						97,
+						101
+					]
+				},
+				{
+					"build" : "_deps/ftxui-build/examples/dom",
+					"jsonFile" : "directory-_deps.ftxui-build.examples.dom-Debug-1074762b4f15fb787a63.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "build/_deps/ftxui-src/examples/dom",
+					"targetIndexes" : 
+					[
+						31,
+						32,
+						37,
+						42,
+						43,
+						44,
+						45,
+						48,
+						53,
+						54,
+						55,
+						56,
+						57,
+						59,
+						73,
+						74,
+						80,
+						81,
+						82,
+						86,
+						87,
+						88,
+						89,
+						90,
+						91,
+						92,
+						93,
+						96,
+						98,
+						99,
+						100
+					]
+				},
+				{
+					"build" : "_deps/ftxui-build/doc",
+					"jsonFile" : "directory-_deps.ftxui-build.doc-Debug-2198135aec18b9a970ba.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "build/_deps/ftxui-src/doc"
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "emct_final_proj",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						30
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "ftxui",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						28,
+						29,
+						31,
+						32,
+						33,
+						34,
+						35,
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						42,
+						43,
+						44,
+						45,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						52,
+						53,
+						54,
+						55,
+						56,
+						57,
+						58,
+						59,
+						60,
+						61,
+						62,
+						63,
+						64,
+						65,
+						66,
+						67,
+						68,
+						69,
+						70,
+						71,
+						72,
+						73,
+						74,
+						75,
+						76,
+						77,
+						78,
+						79,
+						80,
+						81,
+						82,
+						83,
+						84,
+						85,
+						86,
+						87,
+						88,
+						89,
+						90,
+						91,
+						92,
+						93,
+						94,
+						95,
+						96,
+						97,
+						98,
+						99,
+						100,
+						101,
+						102
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Continuous::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Continuous-Debug-9949b02bfb779961f953.json",
+					"name" : "Continuous",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousBuild::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousBuild-Debug-6d30c77411fae229510c.json",
+					"name" : "ContinuousBuild",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousConfigure::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousConfigure-Debug-7b1444537a8eef990538.json",
+					"name" : "ContinuousConfigure",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousCoverage::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousCoverage-Debug-bf387309bc707bb67b55.json",
+					"name" : "ContinuousCoverage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousMemCheck::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousMemCheck-Debug-c04ac3f710828959e343.json",
+					"name" : "ContinuousMemCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousStart::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousStart-Debug-fbca0accd6d64f630792.json",
+					"name" : "ContinuousStart",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousSubmit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousSubmit-Debug-039d46fecf4701517ee3.json",
+					"name" : "ContinuousSubmit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousTest-Debug-238a2609657247295d85.json",
+					"name" : "ContinuousTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ContinuousUpdate::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ContinuousUpdate-Debug-7d59106eee467b17d607.json",
+					"name" : "ContinuousUpdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Experimental::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Experimental-Debug-b976fa4b23f7b29ce7c1.json",
+					"name" : "Experimental",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalBuild::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalBuild-Debug-54011df7035990855434.json",
+					"name" : "ExperimentalBuild",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalConfigure::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalConfigure-Debug-533e7240593f11a1acfd.json",
+					"name" : "ExperimentalConfigure",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalCoverage::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalCoverage-Debug-e5ef386150f2a8180bc5.json",
+					"name" : "ExperimentalCoverage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalMemCheck::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalMemCheck-Debug-13d97356a21014b71b5c.json",
+					"name" : "ExperimentalMemCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalStart::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalStart-Debug-cdebcffedc9c77a613db.json",
+					"name" : "ExperimentalStart",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalSubmit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalSubmit-Debug-6219b49e91a84639ba38.json",
+					"name" : "ExperimentalSubmit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalTest-Debug-f0018cd1a597f4705cf8.json",
+					"name" : "ExperimentalTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ExperimentalUpdate::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExperimentalUpdate-Debug-dde0cc290e1553fc9088.json",
+					"name" : "ExperimentalUpdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Nightly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Nightly-Debug-f5c27a4806cb8df95044.json",
+					"name" : "Nightly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyBuild::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyBuild-Debug-736b835ab0d88be44877.json",
+					"name" : "NightlyBuild",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyConfigure::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyConfigure-Debug-3ac0e1adc67f6fe52039.json",
+					"name" : "NightlyConfigure",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyCoverage::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyCoverage-Debug-57f5cec31ce9f3fa92d3.json",
+					"name" : "NightlyCoverage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyMemCheck::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyMemCheck-Debug-67acef2e3b7dde45d407.json",
+					"name" : "NightlyMemCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyMemoryCheck::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyMemoryCheck-Debug-ab34f1c29b280924b5f1.json",
+					"name" : "NightlyMemoryCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyStart::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyStart-Debug-197baa3c84bf0d728377.json",
+					"name" : "NightlyStart",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlySubmit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlySubmit-Debug-74f0e67c9ac06ea0ae89.json",
+					"name" : "NightlySubmit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyTest-Debug-25b5e4f9c4e2a4939ab7.json",
+					"name" : "NightlyTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NightlyUpdate::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NightlyUpdate-Debug-e398f37101efe9796e5f.json",
+					"name" : "NightlyUpdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "component::@b65f64d0ea8424dee96a",
+					"jsonFile" : "target-component-Debug-c4213bacef12a2df3872.json",
+					"name" : "component",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "dom::@b65f64d0ea8424dee96a",
+					"jsonFile" : "target-dom-Debug-b130598837a35136d67c.json",
+					"name" : "dom",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "emct_final_proj::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-emct_final_proj-Debug-866cc3db06a313dbcc9b.json",
+					"name" : "emct_final_proj",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_border::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_border-Debug-55680bad4c90b440b864.json",
+					"name" : "ftxui_example_border",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_border_style::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_border_style-Debug-695a6742528e5e643e82.json",
+					"name" : "ftxui_example_border_style",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_button::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_button-Debug-60c4541af1abe71657e1.json",
+					"name" : "ftxui_example_button",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_button_animated::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_button_animated-Debug-1355b19dc9d9feb2561d.json",
+					"name" : "ftxui_example_button_animated",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_button_in_frame::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_button_in_frame-Debug-a96dc4eb04e749a1c100.json",
+					"name" : "ftxui_example_button_in_frame",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_button_style::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_button_style-Debug-5736bf1635f7ea994eaa.json",
+					"name" : "ftxui_example_button_style",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_canvas::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_canvas-Debug-f1ae41bb7a407d64b009.json",
+					"name" : "ftxui_example_canvas",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_canvas_animated::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_canvas_animated-Debug-9ee4061044dce416d195.json",
+					"name" : "ftxui_example_canvas_animated",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_checkbox::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_checkbox-Debug-d269c6cdd1fbafebc136.json",
+					"name" : "ftxui_example_checkbox",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_checkbox_in_frame::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_checkbox_in_frame-Debug-53e16cb8a1ddd6c4312b.json",
+					"name" : "ftxui_example_checkbox_in_frame",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_collapsible::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_collapsible-Debug-546e5f70a77e528b4578.json",
+					"name" : "ftxui_example_collapsible",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_color_gallery::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_color_gallery-Debug-c2a7aef7c2f2eeb26ae9.json",
+					"name" : "ftxui_example_color_gallery",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_color_info_palette256::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_color_info_palette256-Debug-896a2d0f407d6c937134.json",
+					"name" : "ftxui_example_color_info_palette256",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_color_truecolor_HSV::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_color_truecolor_HSV-Debug-bd16555d6d219dcd9eda.json",
+					"name" : "ftxui_example_color_truecolor_HSV",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_color_truecolor_RGB::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_color_truecolor_RGB-Debug-30575e7cf463e352f9d4.json",
+					"name" : "ftxui_example_color_truecolor_RGB",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_composition::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_composition-Debug-745914ad920e424327bc.json",
+					"name" : "ftxui_example_composition",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_custom_loop::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_custom_loop-Debug-d0f3c6fba2d4c3e53779.json",
+					"name" : "ftxui_example_custom_loop",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_dbox::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_dbox-Debug-e11277d44b366278666f.json",
+					"name" : "ftxui_example_dbox",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_dropdown::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_dropdown-Debug-495af29bacc80124ba5d.json",
+					"name" : "ftxui_example_dropdown",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_flexbox_gallery::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_flexbox_gallery-Debug-d9b1cb34993bb75c67f3.json",
+					"name" : "ftxui_example_flexbox_gallery",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_focus::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_focus-Debug-403c9d5453a04c2ea4fd.json",
+					"name" : "ftxui_example_focus",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_gallery::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_gallery-Debug-f10568483a9dee7afe10.json",
+					"name" : "ftxui_example_gallery",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_gauge::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_gauge-Debug-0f852b7a675bc4011a6d.json",
+					"name" : "ftxui_example_gauge",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_gauge_direction::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_gauge_direction-Debug-475c7b2c904ec9779bfd.json",
+					"name" : "ftxui_example_gauge_direction",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_graph::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_graph-Debug-681a171b054b08fbbb91.json",
+					"name" : "ftxui_example_graph",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_gridbox::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_gridbox-Debug-173bf9c3cc6799ab86b7.json",
+					"name" : "ftxui_example_gridbox",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_hflow::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_hflow-Debug-fe9000722413afd3b502.json",
+					"name" : "ftxui_example_hflow",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_homescreen::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_homescreen-Debug-e802b87a00e1189fd662.json",
+					"name" : "ftxui_example_homescreen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_html_like::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_html_like-Debug-46cedd581819e517145b.json",
+					"name" : "ftxui_example_html_like",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_input::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_input-Debug-d358a56ff267ca142c88.json",
+					"name" : "ftxui_example_input",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_maybe::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_maybe-Debug-049d9118c47a2271d776.json",
+					"name" : "ftxui_example_maybe",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu-Debug-2292b7f8eee62443be1a.json",
+					"name" : "ftxui_example_menu",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu2::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu2-Debug-69f6cf965edf06015481.json",
+					"name" : "ftxui_example_menu2",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu_entries::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu_entries-Debug-943de46b5f958fe2d246.json",
+					"name" : "ftxui_example_menu_entries",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu_entries_animated::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu_entries_animated-Debug-bf7a075fe01b014b024b.json",
+					"name" : "ftxui_example_menu_entries_animated",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu_in_frame::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu_in_frame-Debug-177e6b2c2b960a76dfc3.json",
+					"name" : "ftxui_example_menu_in_frame",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu_multiple::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu_multiple-Debug-03bb01c3f63f63401c4b.json",
+					"name" : "ftxui_example_menu_multiple",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu_style::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu_style-Debug-7edd1857501878929e63.json",
+					"name" : "ftxui_example_menu_style",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_menu_underline_animated_gallery::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_menu_underline_animated_gallery-Debug-f3cfb38e29766b617a5b.json",
+					"name" : "ftxui_example_menu_underline_animated_gallery",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_modal_dialog::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_modal_dialog-Debug-3498703cb0ea02ef10c1.json",
+					"name" : "ftxui_example_modal_dialog",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_modal_dialog_custom::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_modal_dialog_custom-Debug-4a83f1b78cbeaeff140d.json",
+					"name" : "ftxui_example_modal_dialog_custom",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_nested_screen::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_nested_screen-Debug-c457e692489efd39bf8c.json",
+					"name" : "ftxui_example_nested_screen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_package_manager::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_package_manager-Debug-880642901a0701fc30ee.json",
+					"name" : "ftxui_example_package_manager",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_paragraph::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_paragraph-Debug-51a23bd6e7bbc5e481d3.json",
+					"name" : "ftxui_example_paragraph",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_print_key_press::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_print_key_press-Debug-6b3238c4143b28ab7413.json",
+					"name" : "ftxui_example_print_key_press",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_radiobox::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_radiobox-Debug-3d552ed0d45f80a7f5db.json",
+					"name" : "ftxui_example_radiobox",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_radiobox_in_frame::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_radiobox_in_frame-Debug-8a2c80c6bf6cfc912fbc.json",
+					"name" : "ftxui_example_radiobox_in_frame",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_renderer::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_renderer-Debug-13a9a8549f133b2639e0.json",
+					"name" : "ftxui_example_renderer",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_resizable_split::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_resizable_split-Debug-8305554ef8d68575be30.json",
+					"name" : "ftxui_example_resizable_split",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_separator::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_separator-Debug-c94431dd1fc4db61fada.json",
+					"name" : "ftxui_example_separator",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_separator_style::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_separator_style-Debug-432e0ed6f83cbd234436.json",
+					"name" : "ftxui_example_separator_style",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_size::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_size-Debug-9b7f846bf69dbe92c9d7.json",
+					"name" : "ftxui_example_size",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_slider::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_slider-Debug-2532a5716a72abb272d0.json",
+					"name" : "ftxui_example_slider",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_slider_direction::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_slider_direction-Debug-3ad1a9aec088840cd11f.json",
+					"name" : "ftxui_example_slider_direction",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_slider_rgb::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_slider_rgb-Debug-76b961f41da1df1d3234.json",
+					"name" : "ftxui_example_slider_rgb",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_spinner::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_spinner-Debug-f1aab2a55bdb4ece905c.json",
+					"name" : "ftxui_example_spinner",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_blink::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_blink-Debug-a6ab44485c95e2a9dc3d.json",
+					"name" : "ftxui_example_style_blink",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_bold::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_bold-Debug-714f1650d354a1a7111d.json",
+					"name" : "ftxui_example_style_bold",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_color::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_color-Debug-b2fc22bc04e73aa2e9f4.json",
+					"name" : "ftxui_example_style_color",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_dim::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_dim-Debug-6c92e1d7149ed5a4a493.json",
+					"name" : "ftxui_example_style_dim",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_gallery::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_gallery-Debug-7e6797e92ce1f6571b21.json",
+					"name" : "ftxui_example_style_gallery",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_inverted::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_inverted-Debug-bbe57f903162837f1692.json",
+					"name" : "ftxui_example_style_inverted",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_style_underlined::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_style_underlined-Debug-bc21490f60dccc8b22a6.json",
+					"name" : "ftxui_example_style_underlined",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_tab_horizontal::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_tab_horizontal-Debug-c7780ababa12fbcc7da1.json",
+					"name" : "ftxui_example_tab_horizontal",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_tab_vertical::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_tab_vertical-Debug-a067f0212926fb458d0c.json",
+					"name" : "ftxui_example_tab_vertical",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_table::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_table-Debug-1d00c6b4b67ed79caeb7.json",
+					"name" : "ftxui_example_table",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_toggle::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_toggle-Debug-1849eec8e0e4b47ebbf9.json",
+					"name" : "ftxui_example_toggle",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_vbox_hbox::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_vbox_hbox-Debug-70a2be2bcfe061f5b746.json",
+					"name" : "ftxui_example_vbox_hbox",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_vflow::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_vflow-Debug-4fe866560636557aed46.json",
+					"name" : "ftxui_example_vflow",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ftxui_example_window::@8bd270962809a3e028ba",
+					"jsonFile" : "target-ftxui_example_window-Debug-38a6e4cecede9d499f26.json",
+					"name" : "ftxui_example_window",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ftxui_example_with_restored_io::@ae156dd4a86bb5e17491",
+					"jsonFile" : "target-ftxui_example_with_restored_io-Debug-80f442d0fb82f70461d8.json",
+					"name" : "ftxui_example_with_restored_io",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "screen::@b65f64d0ea8424dee96a",
+					"jsonFile" : "target-screen-Debug-c09528f92b0b1fddefac.json",
+					"name" : "screen",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/sonnyholland/Documents/gs/emct_final_proj/build",
+		"source" : "/Users/sonnyholland/Documents/gs/emct_final_proj"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
