@@ -92,6 +92,8 @@ final_proj_EXTERNAL_OBJECTS =
 
 final_proj: CMakeFiles/final_proj.dir/main.cpp.o
 final_proj: CMakeFiles/final_proj.dir/build.make
+final_proj: /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/lib/libcurses.tbd
+final_proj: /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/lib/libform.tbd
 final_proj: CMakeFiles/final_proj.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/sonnyholland/Documents/gs/emct_final_proj/dev/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable final_proj"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/final_proj.dir/link.txt --verbose=$(VERBOSE)

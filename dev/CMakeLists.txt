@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(final_proj VERSION 0.1.0)
-
 include(CTest)
 enable_testing()
-
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
 add_executable(final_proj main.cpp)
-
+target_link_libraries(final_proj ${CURSES_LIBRARIES})
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
