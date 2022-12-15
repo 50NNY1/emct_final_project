@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: /Users/sonnyholland/Documents/gs/emct_final_proj
-BuildDirectory: /Users/sonnyholland/Documents/gs/emct_final_proj/build
+SourceDirectory: /Users/sonnyholland/Documents/gs/emct_final_proj/dev
+BuildDirectory: /Users/sonnyholland/Documents/gs/emct_final_proj/dev/build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,8 +27,8 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake" "/Users/sonnyholland/Documents/gs/emct_final_proj"
-MakeCommand: /opt/homebrew/Cellar/cmake/3.24.3/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
+ConfigureCommand: "/opt/homebrew/Cellar/cmake/3.25.1/bin/cmake" "/Users/sonnyholland/Documents/gs/emct_final_proj/dev"
+MakeCommand: /opt/homebrew/Cellar/cmake/3.25.1/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -45,7 +45,7 @@ SVNOptions:
 SVNUpdateOptions: 
 
 # Git options
-GITCommand: /opt/homebrew/bin/git
+GITCommand: 
 GITInitSubmodules: 
 GITUpdateOptions: 
 GITUpdateCustom: 
@@ -58,9 +58,9 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: /opt/homebrew/bin/git
+UpdateCommand: 
 UpdateOptions: 
-UpdateType: git
+UpdateType: 
 
 # Compiler info
 Compiler: /usr/bin/clang++
