@@ -17,7 +17,6 @@ int main()
   {
     return -1;
   }
-
   start_color();
   init_pair(1, COLOR_WHITE, COLOR_BLUE);
 
@@ -29,11 +28,11 @@ int main()
 
   string menu1[] = {"attributes", "open", "save", "exit"};
   string menu2[] = {"ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7", "ch8"};
-  string menu3[] = {"test1"};
+  string menu3[] = {"test1", "test2"};
   Menu menus[3] = {
       Menu("Arr", 'a', menu1, 4),
       Menu("Scene", 's', menu2, 8),
-      Menu("Pattern", 'd', menu3, 1),
+      Menu("Pattern", 'd', menu3, 2),
   };
 
   MenuBar menubar(win, menus, 3);
@@ -44,7 +43,7 @@ int main()
   {
     menubar.handleTrigger(ch);
     menubar.draw();
-    endwin();
-    return 0;
   }
+  endwin();
+  return 0;
 }

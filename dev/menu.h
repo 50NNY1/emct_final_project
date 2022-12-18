@@ -72,7 +72,9 @@ public:
     {
         for (int i = 0; i < num_menus; i++)
         {
-            mvwprintw(win, 0, menus[i].start_x, menus[i].text.c_str());
+            int start_x = menus[i].start_x;
+            std::string text = menus[i].text;
+            mvwprintw(win, 0, start_x, text.c_str());
         }
         wrefresh(win);
     }
