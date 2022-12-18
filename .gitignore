@@ -1,0 +1,7 @@
+.gitignore
+.vscode/
+.reading/
+.writing/
+./dev/.vscode
+./dev/build
+./dev/build/

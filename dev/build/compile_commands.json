@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/sonnyholland/Documents/gs/emct_final_proj/dev/build",
-  "command": "/usr/bin/clang++   -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -o CMakeFiles/final_proj.dir/main.cpp.o -c /Users/sonnyholland/Documents/gs/emct_final_proj/dev/main.cpp",
-  "file": "/Users/sonnyholland/Documents/gs/emct_final_proj/dev/main.cpp"
-}
-]
