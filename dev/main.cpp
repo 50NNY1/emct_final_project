@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string>
 #include <stdlib.h>
+#include "menu.h"
 
 using namespace std;
 
@@ -17,45 +18,21 @@ int main()
   WINDOW *win = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);
   box(win, 0, 0);
 
-  mvwprintw(win, 0, 2, "Arr");
-  mvwprintw(win, 0, 7, "Scene");
-  mvwprintw(win, 0, 14, "Pattern");
+  Menu menus[3] = {
+      Menu("Arr", 'a'),
+      Menu("Scene", 's'),
+      Menu("Pattern", 'd'),
+  };
+
+  MenuBar menubar(win, menus, 3);
+  menubar.draw();
 
   char ch;
   while (ch = wgetch(win))
   {
-    switch (ch)
-    {
-    case 'a':
-      wattron(win, A_STANDOUT);
-      mvwprintw(win, 0, 2, "Arr");
-      wattroff(win, A_STANDOUT);
-      mvwprintw(win, 0, 7, "Scene");
-      mvwprintw(win, 0, 14, "Pattern");
-      break;
-    case 's':
-      wattron(win, A_STANDOUT);
-      mvwprintw(win, 0, 7, "Scene");
-      wattroff(win, A_STANDOUT);
-      mvwprintw(win, 0, 2, "Arr");
-      mvwprintw(win, 0, 14, "Pattern");
-      break;
-    case 'd':
-      wattron(win, A_STANDOUT);
-      mvwprintw(win, 0, 14, "Pattern");
-      wattroff(win, A_STANDOUT);
-      mvwprintw(win, 0, 2, "Arr");
-      mvwprintw(win, 0, 7, "Scene");
-      break;
-    default:
-      mvwprintw(win, 0, 2, "Arr");
-      mvwprintw(win, 0, 7, "Scene");
-      mvwprintw(win, 0, 14, "Pattern");
-      break;
-    }
+    menubar.handleTrigger(ch);
+    menubar.draw();
+    endwin();
+    return 0;
   }
-  wgetch(win);
-
-  endwin();
-  return 0;
 }
