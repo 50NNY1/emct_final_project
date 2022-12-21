@@ -41,6 +41,13 @@ public:
             selected = num_items - 1;
         }
     }
+
+    void selectItem()
+    {
+        std::cout << "selected item: %s", items[selected].c_str();
+        // menubar class holds one string at a time, compare with selected?
+        // and in various if statements we can define functionality?
+    }
 };
 
 class MenuBar
@@ -109,6 +116,9 @@ public:
                 break;
             case KEY_UP:
                 menu.selectPrevItem();
+                break;
+            case KEY_ENTER:
+                menu.selectItem();
                 break;
             default:
                 is_selected = false;

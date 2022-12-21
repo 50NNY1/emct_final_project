@@ -1,0 +1,8 @@
+.git/
+.DS_STORE
+.vscode/
+reading/
+writing/
+dev/.vscode/
+dev/build/
+references/
