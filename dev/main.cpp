@@ -4,6 +4,7 @@
 #include <string>
 #include <stdlib.h>
 #include "menu.h"
+#include "pattern.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ int main()
   WINDOW *win = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);
   box(win, 0, 0);
 
-  string menu1[] = {"attributes", "open", "save", "exit"};
+  string menu1[] = {"open", "save", "exit"};
   string menu2[] = {"ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7", "ch8"};
   string menu3[] = {"test1", "test2"};
   Menu menus[3] = {

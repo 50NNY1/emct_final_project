@@ -1,5 +1,9 @@
 .git/
-.DS_STORE
+ncurses_study/
+build/
+literature/
+dev/.DS_Store
+.DS_Store
 .vscode/
 reading/
 writing/
