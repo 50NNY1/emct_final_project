@@ -5,10 +5,12 @@ include(CTest)
 enable_testing()
 
 find_package( Curses REQUIRED )
+find_library(PANEL_LIBRARY panel)
 add_executable(finalproj main.cpp)
 include_directories( ${CURSES_INCLUDE_DIRS} )
-target_link_libraries( finalproj ${CURSES_LIBRARIES} )
+target_link_libraries(finalproj ${NCURSES_LIBRARIES} ${PANEL_LIBRARY})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+
 include(CPack)

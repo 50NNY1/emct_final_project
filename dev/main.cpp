@@ -4,13 +4,13 @@
 #include <string>
 #include <stdlib.h>
 #include "menu.h"
-#include "pattern.h"
-
-using namespace std;
+#include "grid.h"
+#include <panel.h>
 
 int main()
 {
   initscr();
+  cbreak();
   noecho();    // user cant draw to screen
   curs_set(0); // cursor invisible
 
@@ -24,27 +24,40 @@ int main()
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
 
-  WINDOW *win = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);
-  box(win, 0, 0);
-
-  string menu1[] = {"open", "save", "exit"};
-  string menu2[] = {"ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7", "ch8"};
-  string menu3[] = {"test1", "test2"};
+  WINDOW *my_wins[2];
+  PANEL *my_panels[2];
+  my_wins[0] = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);             // menu bar window
+  my_wins[1] = newwin((yMax / 2) + 1, xMax / 2, (yMax / 4) - 1, xMax / 4); // grid window
+  for (int i = 0; i < 2; i++)
+  {
+    box(my_wins[i], 0, 0);
+  }
+  my_panels[0] = new_panel(my_wins[0]);
+  my_panels[1] = new_panel(my_wins[1]);
+  update_panels();
+  std::string menu1[] = {"open", "save", "exit"};
+  std::string menu2[] = {"ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7", "ch8"};
+  std::string menu3[] = {"test1", "test2"};
   Menu menus[3] = {
-      Menu("Arr", 'a', menu1, 4),
+      Menu("File", 'a', menu1, 3),
       Menu("Scene", 's', menu2, 8),
       Menu("Pattern", 'd', menu3, 2),
   };
-
-  MenuBar menubar(win, menus, 3);
+  Grid grid(my_wins[0], 10, 10);
+  MenuBar menubar(my_wins[1], menus, 3);
   menubar.draw();
+  grid.draw();
 
   char ch;
-  while (ch = wgetch(win))
+
+  while (ch = wgetch(my_wins[0]))
   {
     menubar.handleTrigger(ch);
     menubar.draw();
+    grid.draw();
   }
+  update_panels();
+
   endwin();
   return 0;
 }
