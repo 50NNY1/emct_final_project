@@ -26,12 +26,9 @@ int main()
 
   WINDOW *my_wins[2];
   PANEL *my_panels[2];
-  my_wins[0] = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);             // menu bar window
-  my_wins[1] = newwin((yMax / 2) + 1, xMax / 2, (yMax / 4) - 1, xMax / 4); // grid window
-  for (int i = 0; i < 2; i++)
-  {
-    box(my_wins[i], 0, 0);
-  }
+  my_wins[0] = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);                   // menu bar window
+  my_wins[1] = newwin((yMax / 2) + 1, (xMax / 2) + 1, (yMax / 4) - 1, xMax / 4); // grid window
+
   my_panels[0] = new_panel(my_wins[0]);
   my_panels[1] = new_panel(my_wins[1]);
   update_panels();
@@ -43,18 +40,22 @@ int main()
       Menu("Scene", 's', menu2, 8),
       Menu("Pattern", 'd', menu3, 2),
   };
-  Grid grid(my_wins[0], 10, 10);
-  MenuBar menubar(my_wins[1], menus, 3);
+  MenuBar menubar(my_wins[0], menus, 3);
   menubar.draw();
-  grid.draw();
+  Grid grid(my_wins[1], 10, 10);
+  grid.print_grid();
 
-  char ch;
-
+  int ch;
   while (ch = wgetch(my_wins[0]))
   {
     menubar.handleTrigger(ch);
     menubar.draw();
-    grid.draw();
+  }
+  int ch1;
+  while (ch1 = wgetch(my_wins[1]))
+  {
+    grid.handleTrigger(ch1);
+    grid.print_grid();
   }
   update_panels();
 

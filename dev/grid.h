@@ -7,36 +7,86 @@
 class Grid
 {
 public:
-    Grid(WINDOW *win, int cells_x, int cells_y)
+    Grid(WINDOW *win, int rows, int cols) : rows(rows), cols(cols)
     {
         this->win = win;
-        this->cells_x = cells_x;
-        this->cells_y = cells_y;
-    };
-    void draw()
-    {
-        int yMax, xMax;
-        getmaxyx(win, yMax, xMax);
-        cell_width = xMax / cells_x;
-        cell_height = yMax / cells_y;
-
-        for (int i = 0; i < cells_x; i++)
+        grid = new std::string *[rows];
+        x = 0;
+        y = 0;
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < cells_y; j++)
+            grid[i] = new std::string[cols];
+            for (int j = 0; j < cols; j++)
             {
-                mvwhline(win, i * cell_height, j * cell_width, ACS_HLINE, cell_width * cells_x);
-                mvwvline(win, j * cell_height, i * cell_width, ACS_VLINE, cell_height * cells_y);
+                grid[i][j] = " ";
             }
         }
-        wrefresh(win);
+    };
+    ~Grid()
+    {
+        // Deallocate the 2D array
+        for (int i = 0; i < rows; i++)
+        {
+            delete[] grid[i];
+        }
+        delete[] grid;
+    }
+    void handleTrigger(int ch)
+    {
+        clear();
+        print_grid();
+        move(y, x * 3);
+        switch (ch)
+        {
+        case KEY_UP:
+            if (y > 0)
+                y--;
+            break;
+        case KEY_DOWN:
+            if (y < rows - 1)
+                y++;
+            break;
+        case KEY_LEFT:
+            if (x > 0)
+                x--;
+            break;
+        case KEY_RIGHT:
+            if (x < cols - 1)
+                x++;
+            break;
+        case 10: // enter
+            mvwprintw(win, rows + 2, 0, "Enter value for cell [%d, %d]: ", y, x);
+            char buffer[1024];
+            echo();
+            getstr(buffer);
+            noecho();
+            grid[y][x] = buffer;
+            break;
+        case 27: // escape
+            endwin();
+        default:
+            break;
+        }
+    }
+
+    void print_grid()
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                wprintw(win, "%s", grid[i][j].c_str());
+            }
+            wprintw(win, "\n");
+        }
     }
 
 private:
     WINDOW *win;
-    int cells_x;
-    int cells_y;
-    int cell_width;
-    int cell_height;
+    int rows, cols;
+    std::string **grid;
+    bool edit_mode;
+    int x, y;
 };
 
 #endif
