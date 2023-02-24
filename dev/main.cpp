@@ -42,7 +42,7 @@ int main()
   };
   MenuBar menubar(my_wins[0], menus, 3);
   menubar.draw();
-  Grid grid(my_wins[1], 10, 10);
+  Grid grid(my_wins[0], 10, 10);
   grid.print_grid();
 
   int ch;
@@ -55,7 +55,7 @@ int main()
   while (ch1 = wgetch(my_wins[1]))
   {
     grid.handleTrigger(ch1);
-    grid.print_grid();
+    grid.draw();
   }
   update_panels();
 

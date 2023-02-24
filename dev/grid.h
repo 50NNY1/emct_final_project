@@ -69,7 +69,7 @@ public:
         }
     }
 
-    void print_grid()
+    void draw()
     {
         for (int i = 0; i < rows; i++)
         {
