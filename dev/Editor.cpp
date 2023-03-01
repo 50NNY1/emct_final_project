@@ -8,7 +8,9 @@ using namespace std;
 
 Editor::Editor()
 {
-    x=0;y=0;mode='n';
+    x = 0;
+    y = 0;
+    mode = 'n';
     status = "Normal Mode";
     filename = "untitled";
 
@@ -16,20 +18,23 @@ Editor::Editor()
         prevent seg. faults */
     buff = new Buffer();
     buff->appendLine("");
+    this->win = win;
 }
 
 Editor::Editor(string fn)
 {
-    x=0;y=0;mode='n';
+    x = 0;
+    y = 0;
+    mode = 'n';
     status = "Normal Mode";
     filename = fn;
 
     buff = new Buffer();
 
     ifstream infile(fn.c_str());
-    if(infile.is_open())
+    if (infile.is_open())
     {
-        while(!infile.eof())
+        while (!infile.eof())
         {
             string temp;
             getline(infile, temp);
@@ -45,7 +50,7 @@ Editor::Editor(string fn)
 
 void Editor::updateStatus()
 {
-    switch(mode)
+    switch (mode)
     {
     case 'n':
         // Normal mode
@@ -72,7 +77,7 @@ string Editor::tos(int i)
 
 void Editor::handleInput(int c)
 {
-    switch(c)
+    switch (c)
     {
     case KEY_LEFT:
         moveLeft();
@@ -87,10 +92,10 @@ void Editor::handleInput(int c)
         moveDown();
         return;
     }
-    switch(mode)
+    switch (mode)
     {
     case 'n':
-        switch(c)
+        switch (c)
         {
         case 'x':
             // Press 'x' to exit
@@ -107,7 +112,7 @@ void Editor::handleInput(int c)
         }
         break;
     case 'i':
-        switch(c)
+        switch (c)
         {
         case 27:
             // The Escape/Alt key
@@ -116,11 +121,11 @@ void Editor::handleInput(int c)
         case 127:
         case KEY_BACKSPACE:
             // The Backspace key
-            if(x == 0 && y > 0)
+            if (x == 0 && y > 0)
             {
-                x = buff->lines[y-1].length();
+                x = buff->lines[y - 1].length();
                 // Bring the line down
-                buff->lines[y-1] += buff->lines[y];
+                buff->lines[y - 1] += buff->lines[y];
                 // Delete the current line
                 deleteLine();
                 moveUp();
@@ -133,12 +138,12 @@ void Editor::handleInput(int c)
             break;
         case KEY_DC:
             // The Delete key
-            if(x == buff->lines[y].length() && y != buff->lines.size() - 1)
+            if (x == buff->lines[y].length() && y != buff->lines.size() - 1)
             {
                 // Bring the line down
-                buff->lines[y] += buff->lines[y+1];
+                buff->lines[y] += buff->lines[y + 1];
                 // Delete the line
-                deleteLine(y+1);
+                deleteLine(y + 1);
             }
             else
             {
@@ -149,7 +154,7 @@ void Editor::handleInput(int c)
         case 10:
             // The Enter key
             // Bring the rest of the line down
-            if(x < buff->lines[y].length())
+            if (x < buff->lines[y].length())
             {
                 // Put the rest of the line on a new line
                 buff->insertLine(buff->lines[y].substr(x, buff->lines[y].length() - x), y + 1);
@@ -158,7 +163,7 @@ void Editor::handleInput(int c)
             }
             else
             {
-                buff->insertLine("", y+1);
+                buff->insertLine("", y + 1);
             }
             x = 0;
             moveDown();
@@ -184,7 +189,7 @@ void Editor::handleInput(int c)
 
 void Editor::moveLeft()
 {
-    if(x-1 >= 0)
+    if (x - 1 >= 0)
     {
         x--;
         move(y, x);
@@ -193,7 +198,7 @@ void Editor::moveLeft()
 
 void Editor::moveRight()
 {
-    if(x+1 < COLS && x+1 <= buff->lines[y].length())
+    if (x + 1 < COLS && x + 1 <= buff->lines[y].length())
     {
         x++;
         move(y, x);
@@ -202,27 +207,27 @@ void Editor::moveRight()
 
 void Editor::moveUp()
 {
-    if(y-1 >= 0)
+    if (y - 1 >= 0)
         y--;
-    if(x >= buff->lines[y].length())
+    if (x >= buff->lines[y].length())
         x = buff->lines[y].length();
     move(y, x);
 }
 
 void Editor::moveDown()
 {
-    if(y+1 < LINES-1 && y+1 < buff->lines.size())
+    if (y + 1 < LINES - 1 && y + 1 < buff->lines.size())
         y++;
-    if(x >= buff->lines[y].length())
+    if (x >= buff->lines[y].length())
         x = buff->lines[y].length();
     move(y, x);
 }
 
 void Editor::printBuff()
 {
-    for(int i=0; i<LINES-1; i++)
+    for (int i = 0; i < LINES - 1; i++)
     {
-        if(i >= buff->lines.size())
+        if (i >= buff->lines.size())
         {
             move(i, 0);
             clrtoeol();
@@ -239,7 +244,7 @@ void Editor::printBuff()
 void Editor::printStatusLine()
 {
     attron(A_REVERSE);
-    mvprintw(LINES-1, 0, status.c_str());
+    mvprintw(LINES - 1, 0, status.c_str());
     clrtoeol();
     attroff(A_REVERSE);
 }
@@ -256,16 +261,16 @@ void Editor::deleteLine(int i)
 
 void Editor::saveFile()
 {
-    if(filename == "")
+    if (filename == "")
     {
         // Set filename to untitled
         filename = "untitled";
     }
 
     ofstream f(filename.c_str());
-    if(f.is_open())
+    if (f.is_open())
     {
-        for(int i=0; i<buff->lines.size(); i++)
+        for (int i = 0; i < buff->lines.size(); i++)
         {
             f << buff->lines[i] << endl;
         }
@@ -277,4 +282,3 @@ void Editor::saveFile()
     }
     f.close();
 }
-

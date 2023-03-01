@@ -6,7 +6,7 @@ enable_testing()
 
 find_package( Curses REQUIRED )
 find_library(PANEL_LIBRARY panel)
-add_executable(finalproj main.cpp Buffer.cpp Editor.cpp)
+add_executable(finalproj main.cpp )
 include_directories( ${CURSES_INCLUDE_DIRS} )
 target_link_libraries(finalproj ${NCURSES_LIBRARIES} ${PANEL_LIBRARY})
 

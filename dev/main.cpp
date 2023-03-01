@@ -1,46 +1,46 @@
 #include <ncurses.h>
-#include <string>
 
-#include "Editor.h"
-
-using namespace std;
-
-void curses_init()
+int main()
 {
-    initscr();                      // Start ncurses mode
-    noecho();                       // Don't echo keystrokes
-    cbreak();                       // Disable line buffering
-    keypad(stdscr, true);           // Enable special keys to be recorded
-}
+    // Initialize ncurses
+    initscr();
 
-int main(int argc, char* argv[])
-{
-    Editor ed;
-    string fn = "";
-    if(argc > 1)
-    {
-        fn = argv[1];               // Set the filename
-        ed = Editor(fn);
-    }
-    else
-    {
-        ed = Editor();
-    }
+    // Disable line buffering and echoing of keystrokes
+    cbreak();
+    noecho();
 
-    curses_init();                  // Initialize ncurses
+    // Create four windows
+    int window_width = COLS / 4;
+    int window_height = LINES;
+    WINDOW *window1 = newwin(window_height, window_width, 0, 0);
+    WINDOW *window2 = newwin(window_height, window_width, 0, window_width);
+    WINDOW *window3 = newwin(window_height, window_width, 0, window_width * 2);
+    WINDOW *window4 = newwin(window_height, window_width, 0, window_width * 3);
 
-    while(ed.getMode() != 'x')
-    {
-        ed.updateStatus();
-        ed.printStatusLine();
-        ed.printBuff();
-        int input = getch();        // Blocking until input
-        ed.handleInput(input);
-    }
+    // Write text in each window
+    mvwprintw(window1, 1, 1, "This is window 1");
+    mvwprintw(window2, 1, 1, "This is window 2");
+    mvwprintw(window3, 1, 1, "This is window 3");
+    mvwprintw(window4, 1, 1, "This is window 4");
 
+    // Create a box outline around all the windows
+    box(window1, 0, 0);
+    box(window2, 0, 0);
+    box(window3, 0, 0);
+    box(window4, 0, 0);
 
-    refresh();                      // Refresh display
-    endwin();                       // End ncurses mode
+    // Refresh all the windows
+    refresh();
+    wrefresh(window1);
+    wrefresh(window2);
+    wrefresh(window3);
+    wrefresh(window4);
+
+    // Wait for a key press
+    getch();
+
+    // Clean up ncurses
+    endwin();
+
     return 0;
 }
-
