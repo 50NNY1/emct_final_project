@@ -1,92 +1,106 @@
-#include <curses.h>
+#include <ncurses.h>
 #include <string>
+#include <panel.h>
 
-#ifndef _GRID_H_
-#define _GRID_H_
+const int ROWS = 10;
+const int COLUMNS = 10;
 
 class Grid
 {
 public:
-    Grid(WINDOW *win, int rows, int cols) : rows(rows), cols(cols)
+    GridPanel()
     {
-        this->win = win;
-        grid = new std::string *[rows];
-        x = 0;
-        y = 0;
-        for (int i = 0; i < rows; i++)
-        {
-            grid[i] = new std::string[cols];
-            for (int j = 0; j < cols; j++)
-            {
-                grid[i][j] = " ";
-            }
-        }
-    };
-    ~Grid()
-    {
-        // Deallocate the 2D array
-        for (int i = 0; i < rows; i++)
-        {
-            delete[] grid[i];
-        }
-        delete[] grid;
+        initscr();
+        cbreak();
+        noecho();
+        keypad(stdscr, true);
+        panel_ = new_panel(stdscr);
+        init_grid();
+        update();
     }
-    void handleTrigger(int ch)
+
+    ~GridPanel()
     {
-        clear();
-        print_grid();
-        move(y, x * 3);
+        del_panel(panel_);
+        endwin();
+    }
+
+    void update()
+    {
+        update_panels();
+        doupdate();
+    }
+
+    void move(int x, int y)
+    {
+        x_ = x;
+        y_ = y;
+        move_panel(panel_, y_, x_ * 3);
+        update();
+    }
+
+    void handle_input()
+    {
+        int ch = getch();
         switch (ch)
         {
         case KEY_UP:
-            if (y > 0)
-                y--;
+            if (y_ > 0)
+                y_--;
             break;
         case KEY_DOWN:
-            if (y < rows - 1)
-                y++;
+            if (y_ < ROWS - 1)
+                y_++;
             break;
         case KEY_LEFT:
-            if (x > 0)
-                x--;
+            if (x_ > 0)
+                x_--;
             break;
         case KEY_RIGHT:
-            if (x < cols - 1)
-                x++;
+            if (x_ < COLUMNS - 1)
+                x_++;
             break;
         case 10: // enter
-            mvwprintw(win, rows + 2, 0, "Enter value for cell [%d, %d]: ", y, x);
+            mvprintw(ROWS + 2, 0, "Enter value for cell [%d, %d]: ", y_, x_);
             char buffer[1024];
             echo();
             getstr(buffer);
             noecho();
-            grid[y][x] = buffer;
+            grid_[y_][x_] = buffer;
             break;
         case 27: // escape
             endwin();
+            exit(0);
+            break;
         default:
             break;
         }
     }
 
-    void draw()
+private:
+    PANEL *panel_;
+    std::string grid_[ROWS][COLUMNS];
+    int x_ = 0, y_ = 0;
+
+    void init_grid()
     {
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < ROWS; i++)
         {
-            for (int j = 0; j < cols; j++)
+            for (int j = 0; j < COLUMNS; j++)
             {
-                wprintw(win, "%s", grid[i][j].c_str());
+                grid_[i][j] = " ";
             }
-            wprintw(win, "\n");
         }
     }
 
-private:
-    WINDOW *win;
-    int rows, cols;
-    std::string **grid;
-    bool edit_mode;
-    int x, y;
+    void print_grid()
+    {
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLUMNS; j++)
+            {
+                mvprintw(i, j * 3, "[%s]", grid_[i][j].c_str());
+            }
+        }
+    }
 };
-
-#endif

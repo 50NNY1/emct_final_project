@@ -41,21 +41,15 @@ int main()
       Menu("Pattern", 'd', menu3, 2),
   };
   MenuBar menubar(my_wins[0], menus, 3);
+  Grid grid;
   menubar.draw();
-  Grid grid(my_wins[0], 10, 10);
-  grid.print_grid();
-
   int ch;
   while (ch = wgetch(my_wins[0]))
   {
     menubar.handleTrigger(ch);
     menubar.draw();
-  }
-  int ch1;
-  while (ch1 = wgetch(my_wins[1]))
-  {
-    grid.handleTrigger(ch1);
-    grid.draw();
+    grid.handle_input();
+    grid.update();  
   }
   update_panels();
 
