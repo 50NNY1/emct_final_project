@@ -1,0 +1,5 @@
+# ninja log v5
+2	179	1678382505127155551	CMakeFiles/finalproj.dir/main.cpp.o	68cd71a56e6f7344
+2	198	1678382505147574371	CMakeFiles/finalproj.dir/Buffer.cpp.o	97cc2ed1931020f9
+2	251	1678382505200270193	CMakeFiles/finalproj.dir/Editor.cpp.o	c6ba6778e39d653e
+251	295	1678382505244940004	finalproj	8918d46a6e67f247
