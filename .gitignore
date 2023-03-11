@@ -1,12 +1,2 @@
-.git/
-ncurses_study/
-build/
-literature/
-dev/.DS_Store
-.DS_Store
-.vscode/
-reading/
-writing/
-dev/.vscode/
-dev/build/
-references/
+/build/
+/.vscode/
