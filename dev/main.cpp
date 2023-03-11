@@ -14,19 +14,21 @@ string fn = "";
 
 int main(int argc, char *argv[])
 {
-  Editor ed;
   // Initialize filename
-  if (argc > 1)
-  {
-    fn = string(argv[1]);
-    ed = Editor(fn);
-  }
-  else
-  {
-    ed = Editor();
-  }
+
+  // if (argc > 1)
+  // {
+  //   fn = string(argv[1]);
+  //   Editor ed(*win, fn);
+  // }
+  // else
+  // {
+  //   Editor ed(*win);
+  // }
 
   curses_init();
+  WINDOW *win = newwin(0, 0, 0, 0);
+  Editor ed(*win);
   while (ed.getMode() != 'x')
   {
     if (ed.upstatus)
