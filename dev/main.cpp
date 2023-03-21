@@ -7,7 +7,7 @@ void curses_init()
   initscr();
   noecho();
   cbreak(); // Disable line buffering
-  keypad(stdscr, true);
+  // keypad(stdscr, true);
 }
 
 string fn = "";
