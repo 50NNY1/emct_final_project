@@ -3,6 +3,7 @@ project(finalproj VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
+add_compile_options(-Wno-c++11-extensions)
 
 find_package( Curses REQUIRED )
 find_library(PANEL_LIBRARY panel)

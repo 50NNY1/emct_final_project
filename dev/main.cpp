@@ -33,8 +33,12 @@ int main(int argc, char *argv[])
   WINDOW *window3 = newwin(window_height, window_width, 0, window_width * 2);
   WINDOW *window4 = newwin(window_height, window_width, 0, window_width * 3);
 
-  Editor ed(window1);
-
+  Editor ed1(window1);
+  Editor ed2(window2);
+  Editor ed3(window3);
+  Editor ed4(window4);
+  Editor *eds[] = {&ed1, &ed2, &ed3, &ed4};
+  WINDOW *wins[] = {window1, window2, window3, window4};
   box(window1, 0, 0);
   box(window2, 0, 0);
   box(window3, 0, 0);
@@ -46,16 +50,19 @@ int main(int argc, char *argv[])
   wrefresh(window3);
   wrefresh(window4);
 
-  while (ed.getMode() != 'x')
+  for (std::size_t i = 0; i < sizeof(eds) / sizeof(eds[0]); i++)
   {
-    if (ed.upstatus)
-      ed.updateStatus();
-    ed.printStatusLine();
-    ed.printBuff();
-    int input = getch();
-    ed.handleInput(input);
+    Editor *ed = eds[i];
+    while (ed->getMode() != 'x')
+    {
+      if (ed->upstatus)
+        ed->updateStatus();
+      ed->printStatusLine();
+      ed->printBuff();
+      int input = wgetch(wins[i]);
+      ed->handleInput(input);
+    }
   }
-
   endwin();
 
   return 0;
