@@ -5,9 +5,8 @@
 void curses_init()
 {
   initscr();
+  cbreak();
   noecho();
-  cbreak(); // Disable line buffering
-  // keypad(stdscr, true);
 }
 
 string fn = "";
@@ -27,16 +26,26 @@ int main(int argc, char *argv[])
   // }
 
   curses_init();
-  int height, width, start_y, start_x;
-  getmaxyx(stdscr, height, width);
-  start_y = 0;
-  start_x = 0;
-  WINDOW *win1 = newwin(height, width / 2, start_y, start_x);
-  start_x = width / 2;
-  WINDOW *win2 = newwin(height, width / 2, start_y, start_x);
-  Editor ed(win1);
-  box(win1, 0, 0);
-  box(win2, 0, 0);
+  int window_width = COLS / 4;
+  int window_height = LINES;
+  WINDOW *window1 = newwin(window_height, window_width, 0, 0);
+  WINDOW *window2 = newwin(window_height, window_width, 0, window_width);
+  WINDOW *window3 = newwin(window_height, window_width, 0, window_width * 2);
+  WINDOW *window4 = newwin(window_height, window_width, 0, window_width * 3);
+
+  Editor ed(window1);
+
+  box(window1, 0, 0);
+  box(window2, 0, 0);
+  box(window3, 0, 0);
+  box(window4, 0, 0);
+
+  refresh();
+  wrefresh(window1);
+  wrefresh(window2);
+  wrefresh(window3);
+  wrefresh(window4);
+
   while (ed.getMode() != 'x')
   {
     if (ed.upstatus)
@@ -47,11 +56,9 @@ int main(int argc, char *argv[])
     ed.handleInput(input);
   }
 
-  wrefresh(win1);
-  wrefresh(win2);
-  refresh();
-  delwin(win1);
-  delwin(win2);
   endwin();
+
   return 0;
 }
+
+// explain the difference between wmove and wprintw in ncurses

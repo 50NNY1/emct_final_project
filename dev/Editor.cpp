@@ -213,8 +213,9 @@ void Editor::moveLeft()
     if (x - 1 >= 0)
     {
         x--;
-        move(y, x);
+        wmove(win, y, x);
     }
+    wrefresh(win);
 }
 
 void Editor::moveRight()
@@ -222,8 +223,9 @@ void Editor::moveRight()
     if (x + 1 < COLS && x + 1 <= buff->lines[y].length())
     {
         x++;
-        move(y, x);
+        wmove(win, y, x);
     }
+    wrefresh(win);
 }
 
 void Editor::moveUp()
@@ -238,7 +240,8 @@ void Editor::moveUp()
     }
     if (x >= buff->lines[y].length())
         x = buff->lines[y].length();
-    move(y, x);
+    wmove(win, y, x);
+    wrefresh(win);
 }
 
 void Editor::moveDown()
@@ -254,7 +257,8 @@ void Editor::moveDown()
     }
     if (x >= buff->lines[y].length())
         x = buff->lines[y].length();
-    move(y, x);
+    wmove(win, y, x);
+    wrefresh(win);
 }
 
 void Editor::printBuff()
@@ -267,24 +271,26 @@ void Editor::printBuff()
         }
         else
         {
-            mvprintw(lc, 0, buff->lines[i].c_str());
+            mvwprintw(win, lc, 0, buff->lines[i].c_str());
         }
-        clrtoeol();
+        wclrtoeol(win);
         lc++;
     }
-    move(y, x);
+    wmove(win, y, x);
+    wrefresh(win);
 }
 
 void Editor::printStatusLine()
 {
     if (raiseflag)
-        attron(A_BOLD);
-    attron(A_REVERSE);
-    mvprintw(LINES - 1, 0, status.c_str());
-    clrtoeol();
+        wattron(win, A_BOLD);
+    wattron(win, A_REVERSE);
+    mvwprintw(win, LINES - 1, 0, status.c_str());
+    wclrtoeol(win);
     if (raiseflag)
-        attroff(A_BOLD);
-    attroff(A_REVERSE);
+        wattroff(win, A_BOLD);
+    wattroff(win, A_REVERSE);
+    wrefresh(win);
 }
 
 void Editor::saveFile()
