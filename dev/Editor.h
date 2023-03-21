@@ -20,7 +20,7 @@ private:
     string cmd;
     string filename;
     string tos(int);
-    WINDOW &win;
+    WINDOW *win;
     bool execCmd();
 
     void moveUp();
@@ -35,7 +35,7 @@ private:
 public:
     bool upstatus;
 
-    Editor(WINDOW &win_);
+    Editor(WINDOW *win_);
     // Editor(WINDOW &win_, string);
 
     char getMode() { return mode; }

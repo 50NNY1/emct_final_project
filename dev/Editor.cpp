@@ -36,7 +36,7 @@
 //     infile.close();
 // }
 
-Editor::Editor(WINDOW &win_) : win(win_)
+Editor::Editor(WINDOW *win_) : win(win_)
 {
     /* For a new file */
     x = 0;

@@ -27,8 +27,16 @@ int main(int argc, char *argv[])
   // }
 
   curses_init();
-  WINDOW *win = newwin(0, 0, 0, 0);
-  Editor ed(*win);
+  int height, width, start_y, start_x;
+  getmaxyx(stdscr, height, width);
+  start_y = 0;
+  start_x = 0;
+  WINDOW *win1 = newwin(height, width / 2, start_y, start_x);
+  start_x = width / 2;
+  WINDOW *win2 = newwin(height, width / 2, start_y, start_x);
+  Editor ed(win1);
+  box(win1, 0, 0);
+  box(win2, 0, 0);
   while (ed.getMode() != 'x')
   {
     if (ed.upstatus)
@@ -39,7 +47,11 @@ int main(int argc, char *argv[])
     ed.handleInput(input);
   }
 
+  wrefresh(win1);
+  wrefresh(win2);
   refresh();
+  delwin(win1);
+  delwin(win2);
   endwin();
   return 0;
 }
