@@ -5,13 +5,14 @@
 
 #include <ncurses.h>
 
-#define CED_TITLE "ceditor"
-#define CED_VERSION "v0.1.0 test"
+#define CED_TITLE "1UP"
+#define CED_VERSION "pre-alpha 0."
 
 class Editor
 {
 private:
     int x, y;
+    int winx;
     int lowerbound;
     char mode;
     bool raiseflag;
@@ -36,11 +37,14 @@ public:
     bool upstatus;
 
     Editor(WINDOW *win_);
-    // Editor(WINDOW &win_, string);
-
-    char getMode() { return mode; }
+    Editor();
+    char getMode()
+    {
+        return mode;
+    }
 
     void handleInput(int);
+    void assignWindow(WINDOW *win_) { win = win_; }
     void printBuff();
     void printStatusLine();
     void updateStatus();

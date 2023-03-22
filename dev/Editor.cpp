@@ -4,43 +4,26 @@
 #include <iostream>
 #include <sstream>
 
-// Editor::Editor(WINDOW &win_, string fn) : win(win_)
-// {
-//     x = 0;
-//     y = 0;
-//     mode = 'n';
-//     cmd = "";
-//     lowerbound = 0;
-//     raiseflag = false; // for debugging
-//     upstatus = true;
-//     status = "Normal Mode";
-//     buff = new Buffer();
-//     filename = fn;
-
-//     /* Read from file if exists */
-//     ifstream infile(fn.c_str());
-//     if (infile.is_open())
-//     {
-//         while (!infile.eof())
-//         {
-//             string temp;
-//             getline(infile, temp);
-//             buff->appendLine(temp);
-//         }
-//     }
-//     else
-//     {
-//         cerr << "Cannot open file: '" << fn << endl;
-//         buff->appendLine("");
-//     }
-//     infile.close();
-// }
-
-Editor::Editor(WINDOW *win_) : win(win_)
+Editor::Editor()
 {
-    /* For a new file */
     x = 0;
     y = 0;
+    winx = 0;
+    mode = 'n';
+    cmd = "";
+    upstatus = true;
+    raiseflag = false;
+    status = "Normal Mode";
+    lowerbound = 0;
+    filename = "";
+    buff = new Buffer();
+    buff->appendLine("");
+}
+Editor::Editor(WINDOW *win_) : win(win_)
+{
+    x = 0;
+    y = 0;
+    winx = getbegx(win);
     mode = 'n';
     cmd = "";
     upstatus = true;
