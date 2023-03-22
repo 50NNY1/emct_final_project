@@ -70,7 +70,10 @@
     "variant": "cpp",
     "vector": "cpp",
     "algorithm": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "__memory": "cpp",
+    "filesystem": "cpp"
   },
-  "cmake.sourceDirectory": "${workspaceFolder}/dev"
+  "cmake.sourceDirectory": "${workspaceFolder}/dev",
+  "C_Cpp.errorSquiggles": "disabled"
 }

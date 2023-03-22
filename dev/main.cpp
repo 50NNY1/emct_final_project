@@ -15,17 +15,6 @@ string fn = "";
 
 int main(int argc, char *argv[])
 {
-  // Initialize filename
-
-  // if (argc > 1)
-  // {
-  //   fn = string(argv[1]);
-  //   Editor ed(*win, fn);
-  // }
-  // else
-  // {
-  //   Editor ed(*win);
-  // }
 
   curses_init();
   int num_windows = 4;
@@ -45,6 +34,7 @@ int main(int argc, char *argv[])
     editors[i].assignWindow(windows[i]);
   }
 
+  int activeWindow = 0;
   while (true)
   {
     for (int i = 0; i < num_windows; i++)
@@ -57,13 +47,25 @@ int main(int argc, char *argv[])
           ed.updateStatus();
         ed.printStatusLine();
         ed.printBuff();
-        int input = wgetch(win);
-        ed.handleInput(input);
       }
     }
     for (int i = 0; i < 4; i++)
     {
       wrefresh(windows[i]);
+    }
+
+    int ch = getch();
+    if (ch == KEY_SLEFT)
+    {
+      activeWindow = (activeWindow > 0) ? activeWindow - 1 : 0;
+    }
+    else if (ch == KEY_SRIGHT)
+    {
+      activeWindow = (activeWindow < 3) ? activeWindow + 1 : 3;
+    }
+    if (ch != KEY_SLEFT && ch != KEY_SRIGHT)
+    {
+      editors[activeWindow].handleInput(ch);
     }
   }
 

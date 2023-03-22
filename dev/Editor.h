@@ -2,7 +2,6 @@
 #define EDITOR_H
 
 #include "Buffer.h"
-
 #include <ncurses.h>
 
 #define CED_TITLE "1UP"
