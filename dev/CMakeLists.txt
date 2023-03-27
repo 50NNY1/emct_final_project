@@ -6,10 +6,12 @@ enable_testing()
 add_compile_options(-Wno-c++11-extensions)
 
 find_package(Curses REQUIRED)
+find_package(liblo REQUIRED)
 find_library(PANEL_LIBRARY panel)
+
 add_executable(finalproj main.cpp Editor.cpp Buffer.cpp)
-include_directories(${CURSES_INCLUDE_DIRS})
-target_link_libraries(finalproj ${NCURSES_LIBRARIES} ${PANEL_LIBRARY} -lpanel)
+include_directories(${CURSES_INCLUDE_DIRS} ${LIBLO_INCLUDE_DIRS})
+target_link_libraries(finalproj ${NCURSES_LIBRARIES} ${PANEL_LIBRARY} ${LIBLO_LIBRARIES})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
