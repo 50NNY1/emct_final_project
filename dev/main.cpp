@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Editor.h"
-#include <lo/lo.h>
+
 // Initializes the curses.h
 void curses_init()
 {
