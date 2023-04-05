@@ -5,63 +5,18 @@
 #include <chrono>
 #include <string>
 #include <array>
+#include <thread>
+
 class OSC
 {
 public:
     OSC(std::string address, std::string port);
     void sendMonoNote(int note, float velocity, float duration);
-    void sendPolyNote(int *notes, float *velocities, float duration, int size);
+    void sendPoly(int *notes, float *velocities, float duration, int size);
+    void wait(int duration);
 
 private:
     lo_address target;
 };
 
 #endif
-
-OSC::OSC(std::string address, std::string port)
-{
-    target = lo_address_new(address.c_str(), port.c_str());
-}
-
-void OSC::sendMonoNote(int note, float velocity, float duration)
-{
-    lo_message msg = lo_message_new();
-    lo_message_add_int32(msg, note);
-    lo_message_add_float(msg, velocity);
-    lo_send_message(target, "/noteon", msg);
-    lo_message_free(msg);
-    auto start_time = std::chrono::steady_clock::now();
-    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
-        ;
-    lo_message msg1 = lo_message_new();
-    lo_message_add_int32(msg1, note);
-    lo_message_add_float(msg1, 0.0);
-    lo_send_message(target, "/noteoff", msg1);
-    lo_message_free(msg1);
-}
-
-void OSC::sendPolyNote(int *notes, float *velocities, float duration, int size)
-{
-    lo_message msg = lo_message_new();
-    for (int i = 0; i < size; i++)
-    {
-        lo_message_add_int32(msg, notes[i]);
-        lo_message_add_float(msg, velocities[i]);
-    }
-
-    lo_send_message(target, "/midi/chord", msg);
-
-    auto start_time = std::chrono::steady_clock::now();
-    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
-        ;
-
-    lo_message msg1 = lo_message_new();
-    for (int i = 0; i < size; i++)
-    {
-        lo_message_add_int32(msg1, notes[i]);
-        lo_message_add_float(msg1, 0.0);
-    }
-    lo_send_message(target, "/midi/chord", msg1);
-    lo_message_free(msg);
-    lo_message_free(msg1);
-}
