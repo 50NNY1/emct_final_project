@@ -4,14 +4,13 @@
 #include <lo/lo.h>
 #include <chrono>
 #include <string>
-#include <vector>
-
+#include <array>
 class OSC
 {
 public:
     OSC(std::string address, std::string port);
     void sendMonoNote(int note, float velocity, float duration);
-    void sendPolyNote(std::vector<int> notes, std::vector<float> velocities, float duration);
+    void sendPolyNote(int *notes, float *velocities, float duration, int size);
 
 private:
     lo_address target;
@@ -41,10 +40,10 @@ void OSC::sendMonoNote(int note, float velocity, float duration)
     lo_message_free(msg1);
 }
 
-void OSC::sendPolyNote(std::vector<int> notes, std::vector<float> velocities, float duration)
+void OSC::sendPolyNote(int *notes, float *velocities, float duration, int size)
 {
     lo_message msg = lo_message_new();
-    for (int i = 0; i < notes.size(); i++)
+    for (int i = 0; i < size; i++)
     {
         lo_message_add_int32(msg, notes[i]);
         lo_message_add_float(msg, velocities[i]);
@@ -57,7 +56,7 @@ void OSC::sendPolyNote(std::vector<int> notes, std::vector<float> velocities, fl
         ;
 
     lo_message msg1 = lo_message_new();
-    for (int i = 0; i < notes.size(); i++)
+    for (int i = 0; i < size; i++)
     {
         lo_message_add_int32(msg1, notes[i]);
         lo_message_add_float(msg1, 0.0);
