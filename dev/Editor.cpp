@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+#define ctrl(x) ((x)&0x1f)
+
 Editor::Editor()
 {
     x = 0;
@@ -18,6 +20,8 @@ Editor::Editor()
     filename = "";
     buff = new Buffer();
     buff->appendLine("");
+    active = false;
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
 }
 Editor::Editor(WINDOW *win_) : win(win_)
 {
@@ -166,6 +170,9 @@ void Editor::handleInput(int c)
         case KEY_CTAB:
         case KEY_STAB:
         case KEY_CATAB:
+        case ctrl('k'):
+            sendMsg();
+            break;
         case 9:
             // The tab
             buff->lines[y + lowerbound].insert(x, 4, ' ');
@@ -181,6 +188,29 @@ void Editor::handleInput(int c)
     }
 }
 
+void Editor::sendMsg()
+{
+    int lc = 0; // Line count
+    init_pair(1, COLOR_BLACK, COLOR_GREEN);
+    for (int i = lowerbound; lc < LINES - 1; i++)
+    {
+        if (i >= buff->lines.size())
+        {
+        }
+        else
+        {
+            if (i == y + lowerbound)
+                wattron(win, COLOR_PAIR(1));
+            mvwprintw(win, lc, 0, buff->lines[i].c_str());
+            if (i == y + lowerbound)
+                wattroff(win, COLOR_PAIR(1));
+        }
+        wclrtoeol(win);
+        lc++;
+    }
+    wmove(win, y, x);
+    wrefresh(win);
+}
 void Editor::deleteLine()
 {
     buff->removeLine(y);
@@ -247,6 +277,7 @@ void Editor::moveDown()
 void Editor::printBuff()
 {
     int lc = 0; // Line count
+    init_pair(1, COLOR_BLACK, COLOR_GREEN);
     for (int i = lowerbound; lc < LINES - 1; i++)
     {
         if (i >= buff->lines.size())
@@ -268,11 +299,15 @@ void Editor::printStatusLine()
     if (raiseflag)
         wattron(win, A_BOLD);
     wattron(win, A_REVERSE);
+    if (active)
+        wattron(win, COLOR_PAIR(1));
     mvwprintw(win, LINES - 1, 0, status.c_str());
     wclrtoeol(win);
     if (raiseflag)
         wattroff(win, A_BOLD);
     wattroff(win, A_REVERSE);
+    if (active)
+        wattroff(win, COLOR_PAIR(1));
     wrefresh(win);
 }
 
@@ -321,4 +356,9 @@ bool Editor::execCmd()
 
     cmd = "";    // Reset command buffer
     return true; // Returns if command has executed successfully
+}
+
+void Editor::isActive(bool _active)
+{
+    active = _active;
 }

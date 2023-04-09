@@ -12,6 +12,7 @@ void curses_init()
   initscr();
   cbreak();
   noecho();
+  start_color();
 }
 
 string fn = "";
@@ -38,8 +39,16 @@ int main(int argc, char *argv[])
   }
 
   int activeWindow = 0;
+  init_pair(1, COLOR_BLACK, COLOR_GREEN);
   while (true)
   {
+    for (int i = 0; i < editors.size(); i++)
+    {
+      if (i == activeWindow)
+        editors[i].isActive(true);
+      else
+        editors[i].isActive(false);
+    }
     for (int i = 0; i < num_windows; i++)
     {
       Editor &ed = editors[i];
@@ -66,7 +75,7 @@ int main(int argc, char *argv[])
     {
       activeWindow = (activeWindow < 3) ? activeWindow + 1 : 3;
     }
-    if (ch != ctrl('l') && ch != ctrl('h'))
+    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('k'))
     {
       editors[activeWindow].handleInput(ch);
     }

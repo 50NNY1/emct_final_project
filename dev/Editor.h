@@ -19,6 +19,7 @@ private:
     string status;
     string cmd;
     string filename;
+    bool active;
     string tos(int);
     WINDOW *win;
     bool execCmd();
@@ -30,6 +31,7 @@ private:
     void deleteLine();
     void deleteLine(int i);
 
+    void sendMsg();
     void saveFile();
 
 public:
@@ -47,6 +49,7 @@ public:
     void printBuff();
     void printStatusLine();
     void updateStatus();
+    void isActive(bool _active);
 };
 
 #endif
