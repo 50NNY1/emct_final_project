@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Editor.h"
+#include "OSC.h"
 
 // Initializes the curses.h
 void curses_init()
