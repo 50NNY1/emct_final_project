@@ -4,6 +4,8 @@
 #include "Editor.h"
 #include "OSC.h"
 
+#define ctrl(x) ((x)&0x1f)
+
 // Initializes the curses.h
 void curses_init()
 {
