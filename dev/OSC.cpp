@@ -1,6 +1,7 @@
 #include "OSC.h"
 #include <lo/lo.h>
 #include <chrono>
+#include <thread>
 
 OSC::OSC(std::string address, std::string port)
 {

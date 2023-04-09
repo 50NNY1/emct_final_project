@@ -6,11 +6,9 @@
 int main()
 {
   OSC oscserver("127.0.0.1", "7400");
-
-  std::thread t0(&OSC::sendMonoNote, &oscserver, 60, 1.0, 1000);
-  std::thread t1([&]()
-                 { oscserver.sendMonoNote(69, 1.0, 1000); });
-  t0.join();
+  std::thread t1(&OSC::sendMonoNote, &oscserver, 60, 1.0, 1000);
+  std::thread t2(&OSC::sendMonoNote, &oscserver, 64, 1.0, 1000);
   t1.join();
+  t2.join();
   return 0;
 }
