@@ -1,7 +1,7 @@
 #include "OSC.h"
+#include <vector>
 #include <lo/lo.h>
 #include <chrono>
-#include <thread>
 
 OSC::OSC(std::string address, std::string port)
 {
@@ -25,10 +25,10 @@ void OSC::sendMonoNote(int note, float velocity, float duration)
     lo_message_free(msg1);
 }
 
-void OSC::sendPoly(int *notes, float *velocities, float duration, int size)
+void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float duration)
 {
     lo_message msg = lo_message_new();
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < notes.size(); i++)
     {
         lo_message_add_int32(msg, notes[i]);
         lo_message_add_float(msg, velocities[i]);
@@ -39,7 +39,7 @@ void OSC::sendPoly(int *notes, float *velocities, float duration, int size)
     while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
         ;
     lo_message msg1 = lo_message_new();
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < notes.size(); i++)
     {
         lo_message_add_int32(msg1, notes[i]);
         lo_message_add_float(msg1, 0.0);

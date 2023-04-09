@@ -12,7 +12,7 @@ class OSC
 public:
     OSC(std::string address, std::string port);
     void sendMonoNote(int note, float velocity, float duration);
-    void sendPoly(int *notes, float *velocities, float duration, int size);
+    void sendPoly(std::vector<int> notes, std::vector<float> velocities, float duration);
     void wait(int duration);
 
 private:
