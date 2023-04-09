@@ -58,15 +58,15 @@ int main(int argc, char *argv[])
     }
 
     int ch = getch();
-    if (ch == KEY_SLEFT)
+    if (ch == ctrl('h'))
     {
       activeWindow = (activeWindow > 0) ? activeWindow - 1 : 0;
     }
-    else if (ch == KEY_SRIGHT)
+    else if (ch == ctrl('l'))
     {
       activeWindow = (activeWindow < 3) ? activeWindow + 1 : 3;
     }
-    if (ch != KEY_SLEFT && ch != KEY_SRIGHT)
+    if (ch != ctrl('l') && ch != ctrl('h'))
     {
       editors[activeWindow].handleInput(ch);
     }
