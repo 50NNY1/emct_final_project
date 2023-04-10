@@ -1,12 +1,12 @@
 #include "Editor.h"
-
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 #define ctrl(x) ((x)&0x1f)
 
-Editor::Editor()
+Editor::Editor() : osc("127.0.0.1", "7400")
 {
     x = 0;
     y = 0;
@@ -22,8 +22,10 @@ Editor::Editor()
     buff->appendLine("");
     active = false;
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    int ctrl_k = ctrl('k');
+    std::string ctrl_k_str = "^" + std::to_string(ctrl_k + 64);
 }
-Editor::Editor(WINDOW *win_) : win(win_)
+Editor::Editor(WINDOW *win_) : win(win_), osc("127.0.0.1", "7400")
 {
     x = 0;
     y = 0;
@@ -56,7 +58,7 @@ void Editor::updateStatus()
         status = "Exiting";
         break;
     }
-    status += "\tCOL: " + tos(x) + "\tROW: " + tos(lowerbound);
+    status += "\tCOL: " + tos(x) + "\tROW: " + tos(y);
 }
 
 void Editor::handleInput(int c)
@@ -170,9 +172,6 @@ void Editor::handleInput(int c)
         case KEY_CTAB:
         case KEY_STAB:
         case KEY_CATAB:
-        case ctrl('k'):
-            sendMsg();
-            break;
         case 9:
             // The tab
             buff->lines[y + lowerbound].insert(x, 4, ' ');
@@ -190,26 +189,11 @@ void Editor::handleInput(int c)
 
 void Editor::sendMsg()
 {
-    int lc = 0; // Line count
-    init_pair(1, COLOR_BLACK, COLOR_GREEN);
-    for (int i = lowerbound; lc < LINES - 1; i++)
-    {
-        if (i >= buff->lines.size())
-        {
-        }
-        else
-        {
-            if (i == y + lowerbound)
-                wattron(win, COLOR_PAIR(1));
-            mvwprintw(win, lc, 0, buff->lines[i].c_str());
-            if (i == y + lowerbound)
-                wattroff(win, COLOR_PAIR(1));
-        }
-        wclrtoeol(win);
-        lc++;
-    }
-    wmove(win, y, x);
-    wrefresh(win);
+    std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
+    std::thread oscT1(&OSC::sendMonoNote, &osc, std::get<0>(curLineParsed),
+                      std::get<1>(curLineParsed),
+                      std::get<2>(curLineParsed));
+    oscT1.detach();
 }
 void Editor::deleteLine()
 {
@@ -353,6 +337,15 @@ bool Editor::execCmd()
         upstatus = false;
         saveFile();
     }
+    else if (cmd == "K")
+    {
+        sendMsg();
+    }
+    else if (cmd == "t")
+    {
+        buff->appendLine("test");
+        osc.test();
+    }
 
     cmd = "";    // Reset command buffer
     return true; // Returns if command has executed successfully
@@ -361,4 +354,11 @@ bool Editor::execCmd()
 void Editor::isActive(bool _active)
 {
     active = _active;
+}
+
+void Editor::wait(int duration)
+{
+    auto start_time = std::chrono::steady_clock::now();
+    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
+        ;
 }

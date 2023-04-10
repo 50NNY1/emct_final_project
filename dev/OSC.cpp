@@ -55,3 +55,34 @@ void OSC::wait(int duration)
     while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
         ;
 }
+
+std::tuple<int, float, float> OSC::parseMono(std::string string)
+{
+    int note;
+    float velocity;
+    float duration;
+
+    int exclaimIndex = string.find("!");
+    std::vector<int> slashIndicies;
+    std::size_t pos = 0;
+    if (string[exclaimIndex - 1] == 'm')
+    {
+        while ((pos = string.find('/', pos)) != std::string::npos)
+        {
+            slashIndicies.push_back(pos);
+            pos++;
+        }
+    }
+    note = std::stoi(string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1));
+    velocity = std::stof(string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1));
+    duration = std::stof(string.substr(slashIndicies[2] + 1, exclaimIndex - slashIndicies[2] - 1));
+    return std::make_tuple(note, velocity, duration);
+}
+
+void OSC::test()
+{
+    lo_message msg = lo_message_new();
+    lo_message_add_string(msg, "Hello World");
+    lo_send_message(target, "/test", msg);
+    lo_message_free(msg);
+}

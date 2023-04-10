@@ -2,8 +2,6 @@
 #include <iostream>
 #include <vector>
 #include "Editor.h"
-#include "OSC.h"
-
 #define ctrl(x) ((x)&0x1f)
 
 // Initializes the curses.h
@@ -75,7 +73,7 @@ int main(int argc, char *argv[])
     {
       activeWindow = (activeWindow < 3) ? activeWindow + 1 : 3;
     }
-    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('k'))
+    if (ch != ctrl('l') && ch != ctrl('h'))
     {
       editors[activeWindow].handleInput(ch);
     }

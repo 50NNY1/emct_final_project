@@ -72,7 +72,10 @@
     "algorithm": "cpp",
     "fstream": "cpp",
     "__memory": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "__verbose_abort": "cpp",
+    "bit": "cpp",
+    "iomanip": "cpp"
   },
   "cmake.sourceDirectory": "${workspaceFolder}/dev",
   "C_Cpp.errorSquiggles": "disabled"

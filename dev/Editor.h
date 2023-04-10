@@ -2,6 +2,8 @@
 #define EDITOR_H
 
 #include "Buffer.h"
+#include "OSC.h"
+
 #include <ncurses.h>
 
 #define CED_TITLE "1UP"
@@ -10,6 +12,7 @@
 class Editor
 {
 private:
+    OSC osc;
     int x, y;
     int winx;
     int lowerbound;
@@ -20,18 +23,18 @@ private:
     string cmd;
     string filename;
     bool active;
-    string tos(int);
     WINDOW *win;
-    bool execCmd();
+    std::string ctrl_k_str;
 
+    string tos(int);
+    bool execCmd();
     void moveUp();
     void moveDown();
     void moveLeft();
     void moveRight();
     void deleteLine();
     void deleteLine(int i);
-
-    void sendMsg();
+    void wait(int duration);
     void saveFile();
 
 public:
@@ -43,7 +46,7 @@ public:
     {
         return mode;
     }
-
+    void sendMsg();
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
     void printBuff();
