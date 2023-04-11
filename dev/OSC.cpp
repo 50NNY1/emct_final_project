@@ -1,6 +1,8 @@
 #include "OSC.h"
 #include <vector>
 #include <lo/lo.h>
+#include <string>
+#include <sstream>
 #include <chrono>
 
 OSC::OSC(std::string address, std::string port)
@@ -78,6 +80,19 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
     std::string notes_str = string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1);
     std::string velocities_str = string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1);
     duration = std::stof(string.substr(slashIndicies[2] + 1, exclaimIndex - slashIndicies[2] - 1));
+
+    std::stringstream notes_ss(notes_str);
+    std::stringstream velocities_ss(velocities_str);
+    std::string temp;
+    while (std::getline(notes_ss, temp, ','))
+    {
+        notes.push_back(std::stoi(temp));
+    }
+    while (std::getline(velocities_ss, temp, ','))
+    {
+        velocities.push_back(std::stof(temp));
+    }
+    return std::make_tuple(notes, velocities, duration);
 }
 std::tuple<int, float, float> OSC::parseMono(std::string string)
 {
