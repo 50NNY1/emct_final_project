@@ -56,6 +56,29 @@ void OSC::wait(int duration)
         ;
 }
 
+std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::string string)
+{
+    std::vector<int> notes;
+    std::vector<float> velocities;
+    float duration;
+
+    int exclaimIndex = string.find("!");
+    std::vector<int> slashIndicies;
+    std::size_t pos = 0;
+
+    if (string[exclaimIndex - 1] == 'p')
+    {
+        while ((pos = string.find('/', pos)) != std::string::npos)
+        {
+            slashIndicies.push_back(pos);
+            pos++;
+        }
+    }
+    // now got strings of {} ints, and floats.
+    std::string notes_str = string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1);
+    std::string velocities_str = string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1);
+    duration = std::stof(string.substr(slashIndicies[2] + 1, exclaimIndex - slashIndicies[2] - 1));
+}
 std::tuple<int, float, float> OSC::parseMono(std::string string)
 {
     int note;

@@ -189,12 +189,25 @@ void Editor::handleInput(int c)
 
 void Editor::sendMsg()
 {
-    OSC osc("127.0.0.1", "7400");
-    std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
-    std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
-                      std::get<1>(curLineParsed),
-                      std::get<2>(curLineParsed));
-    oscT1.detach();
+    if (buff->lines[y][0] == 'm')
+    {
+        OSC osc("127.0.0.1", "7400");
+        std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
+        std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
+                          std::get<1>(curLineParsed),
+                          std::get<2>(curLineParsed));
+        oscT1.detach();
+    }
+    else if (buff->lines[y][0] == 'p')
+    {
+        OSC osc("127.0.0.1", "7400");
+        std::tuple<std::vector<int>, std::vector<float>, float>
+            curLineParsed = osc.parsePoly(buff->lines[y]);
+        std::thread oscT2(&OSC::sendPoly, osc, std::get<0>(curLineParsed),
+                          std::get<1>(curLineParsed),
+                          std::get<2>(curLineParsed));
+        oscT2.detach();
+    }
 }
 void Editor::deleteLine()
 {
@@ -345,7 +358,6 @@ bool Editor::execCmd()
     else if (cmd == "t")
     {
         OSC osc("127.0.0.1", "7400");
-        buff->appendLine("test");
         osc.test();
     }
 
