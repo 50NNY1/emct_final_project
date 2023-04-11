@@ -6,7 +6,7 @@
 
 #define ctrl(x) ((x)&0x1f)
 
-Editor::Editor() : osc("127.0.0.1", "7400")
+Editor::Editor()
 {
     x = 0;
     y = 0;
@@ -25,7 +25,7 @@ Editor::Editor() : osc("127.0.0.1", "7400")
     int ctrl_k = ctrl('k');
     std::string ctrl_k_str = "^" + std::to_string(ctrl_k + 64);
 }
-Editor::Editor(WINDOW *win_) : win(win_), osc("127.0.0.1", "7400")
+Editor::Editor(WINDOW *win_) : win(win_)
 {
     x = 0;
     y = 0;
@@ -189,8 +189,9 @@ void Editor::handleInput(int c)
 
 void Editor::sendMsg()
 {
+    OSC osc("127.0.0.1", "7400");
     std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
-    std::thread oscT1(&OSC::sendMonoNote, &osc, std::get<0>(curLineParsed),
+    std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
                       std::get<1>(curLineParsed),
                       std::get<2>(curLineParsed));
     oscT1.detach();
@@ -343,6 +344,7 @@ bool Editor::execCmd()
     }
     else if (cmd == "t")
     {
+        OSC osc("127.0.0.1", "7400");
         buff->appendLine("test");
         osc.test();
     }

@@ -12,7 +12,6 @@
 class Editor
 {
 private:
-    OSC osc;
     int x, y;
     int winx;
     int lowerbound;
