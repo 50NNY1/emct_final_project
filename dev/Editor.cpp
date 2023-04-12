@@ -360,6 +360,27 @@ bool Editor::execCmd()
         OSC osc("127.0.0.1", "7400");
         osc.test();
     }
+    else if (cmd == "[D")
+    {
+        moveLeft();
+    }
+    else if (cmd == "[C")
+    {
+        moveRight();
+    }
+    else if (cmd == "[A")
+    {
+        moveUp();
+    }
+    else if (cmd == "[B")
+    {
+        moveDown();
+    }
+    else
+    {
+        status = "Error: Command not found!";
+        return false;
+    }
 
     cmd = "";    // Reset command buffer
     return true; // Returns if command has executed successfully

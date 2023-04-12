@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Editor.h"
+
 #define ctrl(x) ((x)&0x1f)
 
 // Initializes the curses.h
@@ -19,6 +20,25 @@ int main(int argc, char *argv[])
 {
 
   curses_init();
+  // int ch;
+  // while (ch = getch())
+  // {
+  //   mvprintw(1, 0, "ch: %i", ch);
+  // }
+
+  // Editor ed;
+  // ed = Editor(stdscr);
+  // while (ed.getMode() != 'x')
+  // {
+  //   if (ed.upstatus)
+  //     ed.updateStatus();
+  //   ed.printStatusLine();
+  //   ed.printBuff();
+  //   int input = getch();
+  //   ed.handleInput(input);
+  // }
+
+  // refresh();
   int num_windows = 4;
   int window_width = COLS / 4;
   int window_height = LINES;
