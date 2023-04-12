@@ -7,7 +7,7 @@ enable_testing()
 
 add_compile_options(-Wno-c++11-extensions)
 find_package(Curses REQUIRED)
-add_executable(finalproj main.cpp Editor.cpp Buffer.cpp OSC.cpp)
+add_executable(finalproj main.cpp Editor.cpp Buffer.cpp OSC.cpp popup.cpp)
 include_directories(${CURSES_INCLUDE_DIRS} /opt/homebrew/Cellar/liblo/0.31/include)
 target_link_libraries(finalproj ${NCURSES_LIBRARIES} /opt/homebrew/Cellar/liblo/0.31/lib/liblo.dylib)
 

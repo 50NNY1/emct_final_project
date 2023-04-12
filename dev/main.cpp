@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Editor.h"
+#include "popup.h"
 
 #define ctrl(x) ((x)&0x1f)
 
@@ -26,19 +27,6 @@ int main(int argc, char *argv[])
   //   mvprintw(1, 0, "ch: %i", ch);
   // }
 
-  // Editor ed;
-  // ed = Editor(stdscr);
-  // while (ed.getMode() != 'x')
-  // {
-  //   if (ed.upstatus)
-  //     ed.updateStatus();
-  //   ed.printStatusLine();
-  //   ed.printBuff();
-  //   int input = getch();
-  //   ed.handleInput(input);
-  // }
-
-  // refresh();
   int num_windows = 4;
   int window_width = COLS / 4;
   int window_height = LINES;
@@ -56,8 +44,11 @@ int main(int argc, char *argv[])
     editors[i].assignWindow(windows[i]);
   }
 
+  Popup popup(20, 5, 10, 5);
+
   int activeWindow = 0;
   init_pair(1, COLOR_BLACK, COLOR_GREEN);
+
   while (true)
   {
     for (int i = 0; i < editors.size(); i++)
@@ -93,7 +84,11 @@ int main(int argc, char *argv[])
     {
       activeWindow = (activeWindow < 3) ? activeWindow + 1 : 3;
     }
-    if (ch != ctrl('l') && ch != ctrl('h'))
+    else if (ch == ctrl('g'))
+    {
+      popup.toggle();
+    }
+    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g'))
     {
       editors[activeWindow].handleInput(ch);
     }
