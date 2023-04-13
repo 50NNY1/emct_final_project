@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     {
       popup.toggle();
     }
-    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g'))
+    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g') && !popup.isActive())
     {
       editors[activeWindow].handleInput(ch);
     }

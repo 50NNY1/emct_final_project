@@ -62,3 +62,8 @@ void Popup::toggle()
         ison = false;
     }
 }
+
+bool Popup::isActive()
+{
+    return ison;
+}
