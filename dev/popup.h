@@ -8,15 +8,19 @@ class Popup
 {
 public:
     Popup(int width, int height, int x, int y);
-    void init_colors();
     bool isActive();
-    void show(const char *message);
-    void hide();
     void toggle();
+    std::tuple<int, int, std::string> getValues();
 
 private:
+    void init_colors();
+    void show(const char *message);
+    void hide();
     WINDOW *win;
     bool ison;
+    int bpm;
+    int port;
+    std::string ip;
 };
 
 #endif

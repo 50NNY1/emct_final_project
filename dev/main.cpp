@@ -19,14 +19,14 @@ string fn = "";
 
 int main(int argc, char *argv[])
 {
+  if (argc != 2)
+    return 1;
+
+  std::string ip = "127.0.0.1";
+  std::string port = argv[1];
+  std::string address[2] = {ip, port};
 
   curses_init();
-  // int ch;
-  // while (ch = getch())
-  // {
-  //   mvprintw(1, 0, "ch: %i", ch);
-  // }
-
   int num_windows = 4;
   int window_width = COLS / 4;
   int window_height = LINES;
@@ -42,9 +42,10 @@ int main(int argc, char *argv[])
   {
     editors[i] = Editor();
     editors[i].assignWindow(windows[i]);
+    editors[i].setAddress(address);
   }
 
-  Popup popup(20, 5, 10, 5);
+  Popup popup(40, 10, 10, 5);
 
   int activeWindow = 0;
   init_pair(1, COLOR_BLACK, COLOR_GREEN);
@@ -86,6 +87,11 @@ int main(int argc, char *argv[])
     }
     else if (ch == ctrl('g'))
     {
+      popup.toggle();
+    }
+    else if (ch == ctrl('g') && popup.isActive())
+    {
+      std::tuple<int, int, std::string> globParams = popup.getValues();
       popup.toggle();
     }
     if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g') && !popup.isActive())

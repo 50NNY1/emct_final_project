@@ -191,7 +191,7 @@ void Editor::sendMsg()
 {
     if (buff->lines[y][0] == 'm')
     {
-        OSC osc("127.0.0.1", "7400");
+        OSC osc(address);
         std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
         std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed),
@@ -200,7 +200,7 @@ void Editor::sendMsg()
     }
     else if (buff->lines[y][0] == 'p')
     {
-        OSC osc("127.0.0.1", "7400");
+        OSC osc(address);
         std::tuple<std::vector<int>, std::vector<float>, float>
             curLineParsed = osc.parsePoly(buff->lines[y]);
         std::thread oscT2(&OSC::sendPoly, osc, std::get<0>(curLineParsed),
@@ -355,11 +355,6 @@ bool Editor::execCmd()
     {
         sendMsg();
     }
-    else if (cmd == "t")
-    {
-        OSC osc("127.0.0.1", "7400");
-        osc.test();
-    }
     else if (cmd == "[D")
     {
         moveLeft();
@@ -375,6 +370,15 @@ bool Editor::execCmd()
     else if (cmd == "[B")
     {
         moveDown();
+    }
+    else if (cmd == "k")
+    {
+        runSeq();
+    }
+    else if (cmd == "t")
+    {
+        OSC osc(address);
+        osc.test(buff->lines[y]);
     }
     else
     {
@@ -396,4 +400,30 @@ void Editor::wait(int duration)
     auto start_time = std::chrono::steady_clock::now();
     while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
         ;
+}
+
+void Editor::runSeq()
+{
+    // int size = buff->lines.size();
+    // buff->appendLine(std::to_string(size));
+    OSC osc(address);
+    for (int i = 0; i < buff->lines.size(); i++)
+    {
+        if (buff->lines[i][0] == 'm')
+        {
+            std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[i]);
+            osc.sendMonoNote(std::get<0>(curLineParsed), std::get<1>(curLineParsed), std::get<2>(curLineParsed));
+        }
+        else if (buff->lines[i][0] == 'p')
+        {
+            std::tuple<std::vector<int>, std::vector<float>, float> curLineParsed = osc.parsePoly(buff->lines[i]);
+            osc.sendPoly(std::get<0>(curLineParsed), std::get<1>(curLineParsed), std::get<2>(curLineParsed));
+        }
+    }
+}
+
+void Editor::setAddress(std::string _address[])
+{
+    address[0] = _address[0];
+    address[1] = _address[1];
 }

@@ -17,6 +17,7 @@ private:
     int lowerbound;
     char mode;
     bool raiseflag;
+    std::string address[2];
     Buffer *buff;
     string status;
     string cmd;
@@ -46,12 +47,14 @@ public:
         return mode;
     }
     void sendMsg();
+    void runSeq();
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
     void printBuff();
     void printStatusLine();
     void updateStatus();
     void isActive(bool _active);
+    void setAddress(std::string _address[]);
 };
 
 #endif
