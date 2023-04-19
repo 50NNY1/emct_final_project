@@ -96,11 +96,10 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
             pos++;
         }
     }
-    // now got strings of {} ints, and floats.
+    // now get strings of ints, and floats.
     std::string notes_str = string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1);
     std::string velocities_str = string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1);
-    duration = std::stof(string.substr(slashIndicies[2] + 1, exclaimIndex - slashIndicies[2] - 1));
-
+    duration = std::stof(string.substr(slashIndicies[2] + 1, slashIndicies[3] - slashIndicies[2] - 1));
     std::stringstream notes_ss(notes_str);
     std::stringstream velocities_ss(velocities_str);
     std::string temp;
@@ -144,4 +143,45 @@ void OSC::test(std::string string)
     lo_send_message(target, "/test", msg);
     lo_message_free(msg);
     this->wait(35);
+}
+
+std::tuple<std::vector<int>, std::vector<float>> OSC::parseMacro(std::string string)
+{
+    std::vector<int> values;
+    std::vector<float> glideTimes;
+
+    int exclaimIndex = string.find("!");
+    std::vector<int> slashIndicies;
+    std::size_t pos = 0;
+    if (string[exclaimIndex - 1] == 'o')
+    {
+        while ((pos = string.find('/', pos)) != std::string::npos)
+        {
+            slashIndicies.push_back(pos);
+            pos++;
+        }
+    }
+
+    std::string values_str = string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1);
+    std::string glideTimes_str = string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1);
+    std::stringstream values_ss(values_str);
+    std::stringstream glideTimes_ss(glideTimes_str);
+    std::string temp;
+    while (std::getline(values_ss, temp, ';'))
+    {
+        values.push_back(std::stoi(temp));
+    }
+    while (std::getline(glideTimes_ss, temp, ','))
+    {
+        glideTimes.push_back(std::stof(temp));
+    }
+    return std::make_tuple(values, glideTimes);
+}
+
+void OSC::sendMacro(std::vector<int> values, std::vector<float> glideTimes)
+{
+    lo_message msg = lo_message_new();
+    lo_message_add_string(msg, "macro");
+    lo_send_message(target, "/macro", msg);
+    lo_message_free(msg);
 }

@@ -208,6 +208,15 @@ void Editor::sendMsg()
                           std::get<2>(curLineParsed));
         oscT2.detach();
     }
+    else if (buff->lines[y][0] == 'o')
+    {
+        OSC osc(address);
+        std::tuple<std::vector<int>, std::vector<float>>
+            curLineParsed = osc.parseMacro(buff->lines[y]);
+        std::thread oscT3(&OSC::sendMacro, osc, std::get<0>(curLineParsed),
+                          std::get<1>(curLineParsed));
+        oscT3.detach();
+    }
 }
 void Editor::deleteLine()
 {
