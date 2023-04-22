@@ -419,13 +419,30 @@ void Editor::runSeq()
     {
         if (buff->lines[i][0] == 'm')
         {
-            std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[i]);
-            osc.sendMonoNote(std::get<0>(curLineParsed), std::get<1>(curLineParsed), std::get<2>(curLineParsed));
+            OSC osc(address);
+            std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
+            std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
+                              std::get<1>(curLineParsed),
+                              std::get<2>(curLineParsed));
+            oscT1.detach();
         }
         else if (buff->lines[i][0] == 'p')
         {
-            std::tuple<std::vector<int>, std::vector<float>, float> curLineParsed = osc.parsePoly(buff->lines[i]);
-            osc.sendPoly(std::get<0>(curLineParsed), std::get<1>(curLineParsed), std::get<2>(curLineParsed));
+            OSC osc(address);
+            std::tuple<std::vector<int>, std::vector<float>, float>
+                curLineParsed = osc.parsePoly(buff->lines[y]);
+            std::thread oscT2(&OSC::sendPoly, osc, std::get<0>(curLineParsed),
+                              std::get<1>(curLineParsed),
+                              std::get<2>(curLineParsed));
+            oscT2.detach();
+        }
+        else if (buff->lines[i][0] == 'o')
+        {
+            OSC osc(address);
+            std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[y]);
+            std::thread oscT3(&OSC::sendMacro, osc, std::get<0>(curLineParsed),
+                              std::get<1>(curLineParsed));
+            oscT3.detach();
         }
     }
 }
