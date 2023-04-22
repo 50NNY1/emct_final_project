@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <thread>
-
+#include <unordered_map>
 #define ctrl(x) ((x)&0x1f)
 
 Editor::Editor()
@@ -211,8 +211,7 @@ void Editor::sendMsg()
     else if (buff->lines[y][0] == 'o')
     {
         OSC osc(address);
-        std::tuple<std::vector<int>, std::vector<float>>
-            curLineParsed = osc.parseMacro(buff->lines[y]);
+        std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[y]);
         std::thread oscT3(&OSC::sendMacro, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed));
         oscT3.detach();

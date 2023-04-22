@@ -19,6 +19,7 @@ string fn = "";
 
 int main(int argc, char *argv[])
 {
+  std::cout << "Hello World!" << std::endl;
   if (argc != 2)
     return 1;
 

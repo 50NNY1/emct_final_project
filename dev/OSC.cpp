@@ -1,10 +1,12 @@
 #include "OSC.h"
 #include <vector>
 #include <lo/lo.h>
+#include <iostream>
 #include <thread>
 #include <string>
 #include <sstream>
 #include <chrono>
+#include <unordered_map>
 
 OSC::OSC(std::string *addressPort)
 {
@@ -28,9 +30,6 @@ void OSC::sendMonoNote(int _note, float _velocity, float duration)
     lo_send_message(target, "/noteon", msg);
     lo_message_free(msg);
     this->wait(duration);
-    // auto start_time = std::chrono::steady_clock::now();
-    // while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < _duration)
-    //     ;
     lo_message msg1 = lo_message_new();
     lo_message_add_int32(msg1, _note);
     lo_message_add_float(msg1, 0.0);
@@ -101,14 +100,7 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
     std::stringstream notes_ss(notes_str);
     std::stringstream velocities_ss(velocities_str);
     std::string temp;
-    while (std::getline(notes_ss, temp, ','))
-    {
-        notes.push_back(std::stoi(temp));
-    }
-    while (std::getline(velocities_ss, temp, ','))
-    {
-        velocities.push_back(std::stof(temp));
-    }
+
     return std::make_tuple(notes, velocities, duration);
 }
 std::tuple<int, float, float> OSC::parseMono(std::string string)
@@ -143,11 +135,20 @@ void OSC::test(std::string string)
     this->wait(35);
 }
 
-std::tuple<std::vector<int>, std::vector<float>> OSC::parseMacro(std::string string)
+std::tuple<std::unordered_map<char, int>, std::vector<float>> OSC::parseMacro(std::string string)
 {
-    std::vector<int> values;
-    std::vector<float> glideTimes;
+    // instantiate map with default values
+    std::unordered_map<char, int> macros_map{
+        {'A', 0},
+        {'B', 0},
+        {'C', 0},
+        {'D', 0},
+        {'E', 0},
+        {'F', 0},
+        {'G', 0},
+        {'H', 0}};
 
+    std::vector<float> glideTimes;
     int exclaimIndex = string.find("!");
     std::vector<int> slashIndicies;
     std::size_t pos = 0;
@@ -159,27 +160,62 @@ std::tuple<std::vector<int>, std::vector<float>> OSC::parseMacro(std::string str
             pos++;
         }
     }
-
-    std::string values_str = string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1);
+    std::string macros_str = string.substr(slashIndicies[0] + 1, slashIndicies[1] - slashIndicies[0] - 1);
     std::string glideTimes_str = string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1);
-    std::stringstream values_ss(values_str);
+    std::stringstream macros_ss(macros_str);
     std::stringstream glideTimes_ss(glideTimes_str);
     std::string temp;
-    while (std::getline(values_ss, temp, ';'))
+
+    macros_str.erase(std::remove(macros_str.begin(), macros_str.end(), ';'), macros_str.end());
+    macros_str.erase(std::remove(macros_str.begin(), macros_str.end(), ','), macros_str.end());
+
+    while (std::getline(macros_ss, temp, ' '))
     {
-        values.push_back(std::stoi(temp));
+        char letter = temp[0];
+        int value;
+        try
+        {
+            value = std::stoi(temp.substr(2));
+            // use the value here
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cerr << "Invalid argument: " << e.what() << ", the invalid argument was: " << temp.substr(1) << '\n';
+        }
+        catch (const std::out_of_range &e)
+        {
+            std::cerr << "Out of range: " << e.what() << '\n';
+        }
+        macros_map[letter] = value;
     }
+
     while (std::getline(glideTimes_ss, temp, ','))
     {
         glideTimes.push_back(std::stof(temp));
     }
-    return std::make_tuple(values, glideTimes);
+    return std::make_tuple(macros_map, glideTimes);
 }
 
-void OSC::sendMacro(std::vector<int> values, std::vector<float> glideTimes)
+void OSC::sendMacro(std::unordered_map<char, int> values, std::vector<float> glideTimes)
 {
     lo_message msg = lo_message_new();
-    lo_message_add_string(msg, "macro");
+    lo_message_add_int32(msg, values['A']);
+    lo_message_add_int32(msg, values['B']);
+    lo_message_add_int32(msg, values['C']);
+    lo_message_add_int32(msg, values['D']);
+    lo_message_add_int32(msg, values['E']);
+    lo_message_add_int32(msg, values['F']);
+    lo_message_add_int32(msg, values['G']);
+    lo_message_add_int32(msg, values['H']);
+    lo_message_add_float(msg, glideTimes[0]);
+    lo_message_add_float(msg, glideTimes[1]);
+    lo_message_add_float(msg, glideTimes[2]);
+    lo_message_add_float(msg, glideTimes[3]);
+    lo_message_add_float(msg, glideTimes[4]);
+    lo_message_add_float(msg, glideTimes[5]);
+    lo_message_add_float(msg, glideTimes[6]);
+    lo_message_add_float(msg, glideTimes[7]);
     lo_send_message(target, "/macro", msg);
     lo_message_free(msg);
+    this->wait(35);
 }
