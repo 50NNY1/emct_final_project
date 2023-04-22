@@ -19,7 +19,7 @@ string fn = "";
 
 int main(int argc, char *argv[])
 {
-  std::cout << "Hello World!" << std::endl;
+  std::cout << "Please launch with desired port number as arguement" << std::endl;
   if (argc != 2)
     return 1;
 
