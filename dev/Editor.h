@@ -25,6 +25,8 @@ private:
     bool active;
     WINDOW *win;
     std::string ctrl_k_str;
+    int loop_toggle;
+    bool isLooping;
 
     string tos(int);
     bool execCmd();

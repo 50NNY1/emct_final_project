@@ -24,6 +24,7 @@ Editor::Editor()
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
     int ctrl_k = ctrl('k');
     std::string ctrl_k_str = "^" + std::to_string(ctrl_k + 64);
+    loop_toggle = 0;
 }
 Editor::Editor(WINDOW *win_) : win(win_)
 {
@@ -381,8 +382,12 @@ bool Editor::execCmd()
     }
     else if (cmd == "k")
     {
-        std::thread loopThread(&Editor::runSeq, this);
-        loopThread.detach();
+        loop_toggle++;
+        if (loop_toggle % 2 == 1)
+        {
+            std::thread loopThread(&Editor::runSeq, this);
+            loopThread.detach();
+        }
     }
     else if (cmd == "t")
     {
@@ -434,6 +439,8 @@ void Editor::runSeq()
     OSC osc(address);
     for (int i = loopBegin; i <= loopEnd; i++)
     {
+        if (loop_toggle % 2 == 0)
+            break;
         if (buff->lines[i][0] == 'm')
         {
             osc.test(std::string(std::to_string(i) + " " + "is active"));
