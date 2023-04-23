@@ -444,6 +444,10 @@ void Editor::runSeq()
                               std::get<1>(curLineParsed));
             oscT3.detach();
         }
+        else if (buff->lines[i][0] == ')')
+        {
+            i = 0;
+        }
     }
 }
 

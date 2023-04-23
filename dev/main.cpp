@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <iostream>
+#include <signal.h>
 #include <vector>
 #include "Editor.h"
 #include "popup.h"
@@ -13,6 +14,14 @@ void curses_init()
   cbreak();
   noecho();
   start_color();
+}
+
+// makes sure ncurses is properly exited on ctrl-c
+void sigint_handler(int sig)
+{
+  endwin();
+  signal(sig, SIG_DFL);
+  raise(sig);
 }
 
 string fn = "";
@@ -101,6 +110,11 @@ int main(int argc, char *argv[])
     }
   }
 
+  signal(SIGINT, sigint_handler);
+  for (int i = 0; i < num_windows; i++)
+  {
+    delwin(windows[i]);
+  }
   endwin();
   return 0;
 }
