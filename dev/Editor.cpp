@@ -457,6 +457,13 @@ void Editor::runSeq()
             std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[i]);
             osc.sendMacro(std::get<0>(curLineParsed), std::get<1>(curLineParsed));
         }
+        else if (buff->lines[i][0] == 'w')
+        {
+            int exclamationIndex = buff->lines[i].find('!');
+            string numberString = buff->lines[i].substr(exclamationIndex + 1);
+            int number = stoi(numberString);
+            wait(number);
+        }
         if (i == loopEnd)
         {
             i = loopBegin - 1;
