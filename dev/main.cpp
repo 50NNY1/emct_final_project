@@ -28,17 +28,18 @@ string fn = "";
 
 int main(int argc, char *argv[])
 {
-  std::cout << "Please launch with desired port number as arguement" << std::endl;
-  if (argc != 2)
+  std::cout << "Please launch with desired port number as arguement and then no. of 1UP instances." << std::endl;
+  if (argc != 3)
     return 1;
 
   std::string ip = "127.0.0.1";
   std::string port = argv[1];
+  int num_instances = atoi(argv[2]);
   std::string address[2] = {ip, port};
 
   curses_init();
-  int num_windows = 4;
-  int window_width = COLS / 4;
+  int num_windows = num_instances;
+  int window_width = COLS / num_instances;
   int window_height = LINES;
   std::vector<WINDOW *> windows(num_windows);
   for (int i = 0; i < num_windows; i++)
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
     }
     else if (ch == ctrl('l'))
     {
-      activeWindow = (activeWindow < 3) ? activeWindow + 1 : 3;
+      activeWindow = (activeWindow < num_instances - 1) ? activeWindow + 1 : num_instances - 1;
     }
     else if (ch == ctrl('g'))
     {
