@@ -15,6 +15,7 @@ public:
     std::tuple<int, float, float> parseMono(std::string string);
     std::tuple<std::vector<int>, std::vector<float>, float> parsePoly(std::string string);
     std::tuple<std::unordered_map<char, int>, std::vector<float>> parseMacro(std::string string);
+    int getNoteNumber(std::string notename);
     void test(std::string string);
     void wait(int duration);
 
