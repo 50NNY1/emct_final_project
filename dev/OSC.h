@@ -8,7 +8,7 @@
 class OSC
 {
 public:
-    OSC(std::string *addressPort);
+    OSC(std::string *addressPort, int instancenum_);
     void sendMonoNote(int note, float velocity, float duration);
     void sendPoly(std::vector<int> notes, std::vector<float> velocities, float duration);
     void sendMacro(std::unordered_map<char, int> values, std::vector<float> velocities);
@@ -21,6 +21,7 @@ public:
 
 private:
     lo_address target;
+    int instancenum;
 };
 
 #endif

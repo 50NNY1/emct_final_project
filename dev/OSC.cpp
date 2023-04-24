@@ -8,11 +8,12 @@
 #include <chrono>
 #include <unordered_map>
 
-OSC::OSC(std::string *addressPort)
+OSC::OSC(std::string *addressPort, int instancenum_)
 {
     std::string address = *(addressPort);
     std::string port = *(addressPort + 1);
     target = lo_address_new(address.c_str(), port.c_str());
+    instancenum = instancenum_;
 }
 
 void OSC::sendMonoNote(int _note, float _velocity, float duration)
@@ -27,13 +28,13 @@ void OSC::sendMonoNote(int _note, float _velocity, float duration)
     else
         velocity = _velocity;
     lo_message_add_float(msg, velocity);
-    lo_send_message(target, "/noteon", msg);
+    lo_send_message(target, ("/noteon " + std::to_string(instancenum)).c_str(), msg);
     lo_message_free(msg);
     this->wait(duration);
     lo_message msg1 = lo_message_new();
     lo_message_add_int32(msg1, _note);
     lo_message_add_float(msg1, 0.0);
-    lo_send_message(target, "/noteoff", msg1);
+    lo_send_message(target, ("/noteoff " + std::to_string(instancenum)).c_str(), msg1);
     lo_message_free(msg1);
 }
 
@@ -57,7 +58,7 @@ void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float 
         lo_message_add_float(msg, velocities[i]);
     }
 
-    lo_send_message(target, "/midi/chord", msg);
+    lo_send_message(target, ("/midi/chord " + std::to_string(instancenum)).c_str(), msg);
     this->wait(duration);
     lo_message msg1 = lo_message_new();
     for (int i = 0; i < notes.size(); i++)
@@ -65,7 +66,7 @@ void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float 
         lo_message_add_int32(msg1, notes[i]);
         lo_message_add_float(msg1, 0.0);
     }
-    lo_send_message(target, "/midi/chord", msg1);
+    lo_send_message(target, ("/midi/chord " + std::to_string(instancenum)).c_str(), msg1);
     lo_message_free(msg);
     lo_message_free(msg1);
 }
@@ -100,6 +101,14 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
     std::stringstream notes_ss(notes_str);
     std::stringstream velocities_ss(velocities_str);
     std::string temp;
+    while (std::getline(notes_ss, temp, ','))
+    {
+        notes.push_back(std::stoi(temp));
+    };
+    while (std::getline(velocities_ss, temp, ','))
+    {
+        velocities.push_back(std::stof(temp));
+    };
 
     return std::make_tuple(notes, velocities, duration);
 }
@@ -131,7 +140,7 @@ void OSC::test(std::string string)
 {
     lo_message msg = lo_message_new();
     lo_message_add_string(msg, string.c_str());
-    lo_send_message(target, "/test", msg);
+    lo_send_message(target, ("/test " + std::to_string(instancenum)).c_str(), msg);
     lo_message_free(msg);
     this->wait(35);
 }
@@ -216,7 +225,7 @@ void OSC::sendMacro(std::unordered_map<char, int> values, std::vector<float> gli
     lo_message_add_float(msg, glideTimes[5]);
     lo_message_add_float(msg, glideTimes[6]);
     lo_message_add_float(msg, glideTimes[7]);
-    lo_send_message(target, "/macro", msg);
+    lo_send_message(target, ("/macro " + std::to_string(instancenum)).c_str(), msg);
     lo_message_free(msg);
     this->wait(35);
 }

@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
     editors[i] = Editor();
     editors[i].assignWindow(windows[i]);
     editors[i].setAddress(address);
+    editors[i].assignInstance(i + 1);
   }
 
   Popup popup(40, 10, 10, 5);

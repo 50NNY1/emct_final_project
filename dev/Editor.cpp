@@ -30,7 +30,7 @@ Editor::Editor(WINDOW *win_) : win(win_)
 {
     x = 0;
     y = 0;
-    winx = getbegx(win);
+    winx = 0;
     mode = 'n';
     cmd = "";
     upstatus = true;
@@ -40,6 +40,11 @@ Editor::Editor(WINDOW *win_) : win(win_)
     filename = "";
     buff = new Buffer();
     buff->appendLine("");
+    active = false;
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    int ctrl_k = ctrl('k');
+    std::string ctrl_k_str = "^" + std::to_string(ctrl_k + 64);
+    loop_toggle = 0;
 }
 
 void Editor::updateStatus()
@@ -192,7 +197,7 @@ void Editor::sendMsg()
 {
     if (buff->lines[y][0] == 'm')
     {
-        OSC osc(address);
+        OSC osc(address, instancenum);
         std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
         std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed),
@@ -201,7 +206,7 @@ void Editor::sendMsg()
     }
     else if (buff->lines[y][0] == 'p')
     {
-        OSC osc(address);
+        OSC osc(address, instancenum);
         std::tuple<std::vector<int>, std::vector<float>, float>
             curLineParsed = osc.parsePoly(buff->lines[y]);
         std::thread oscT2(&OSC::sendPoly, osc, std::get<0>(curLineParsed),
@@ -211,7 +216,7 @@ void Editor::sendMsg()
     }
     else if (buff->lines[y][0] == 'o')
     {
-        OSC osc(address);
+        OSC osc(address, instancenum);
         std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[y]);
         std::thread oscT3(&OSC::sendMacro, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed));
@@ -391,7 +396,7 @@ bool Editor::execCmd()
     }
     else if (cmd == "t")
     {
-        OSC osc(address);
+        OSC osc(address, instancenum);
         osc.test(buff->lines[y]);
     }
     else
@@ -436,7 +441,7 @@ void Editor::runSeq()
             break;
         }
     }
-    OSC osc(address);
+    OSC osc(address, instancenum);
     for (int i = loopBegin; i <= loopEnd; i++)
     {
         if (loop_toggle % 2 == 0)

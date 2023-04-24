@@ -26,6 +26,7 @@ private:
     WINDOW *win;
     std::string ctrl_k_str;
     int loop_toggle;
+    int instancenum;
     bool isLooping;
 
     string tos(int);
@@ -52,6 +53,7 @@ public:
     void runSeq();
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
+    void assignInstance(int instancenum_) { instancenum = instancenum_; }
     void printBuff();
     void printStatusLine();
     void updateStatus();
