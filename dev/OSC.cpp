@@ -103,12 +103,22 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
     std::string temp;
     while (std::getline(notes_ss, temp, ','))
     {
-        notes.push_back(std::stoi(temp));
+        notes.push_back(getNoteNumber(temp));
     };
     while (std::getline(velocities_ss, temp, ','))
     {
         velocities.push_back(std::stof(temp));
     };
+
+    if (notes.size() != velocities.size())
+    {
+        float velocity = velocities[0];
+        velocities.clear();
+        for (int i = 0; i < notes.size(); i++)
+        {
+            velocities.push_back(velocity);
+        }
+    }
 
     return std::make_tuple(notes, velocities, duration);
 }

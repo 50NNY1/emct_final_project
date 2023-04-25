@@ -7,7 +7,7 @@
 #include <ncurses.h>
 
 #define CED_TITLE "1UP"
-#define CED_VERSION "pre-alpha 0."
+#define CED_VERSION "alpha 0.1"
 
 class Editor
 {
