@@ -37,7 +37,6 @@ private:
     void moveRight();
     void deleteLine();
     void deleteLine(int i);
-    void wait(int duration);
     void saveFile();
 
 public:

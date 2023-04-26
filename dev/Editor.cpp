@@ -414,17 +414,11 @@ void Editor::isActive(bool _active)
     active = _active;
 }
 
-void Editor::wait(int duration)
-{
-    auto start_time = std::chrono::steady_clock::now();
-    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < duration)
-        ;
-}
-
 void Editor::runSeq()
 {
     int loopBegin = 0;
     int loopEnd = 0;
+    bool isRunning = false;
     for (int i = y; i >= 0; i--)
     {
         if (buff->lines[i][0] == '(')
@@ -444,11 +438,8 @@ void Editor::runSeq()
     OSC osc(address, instancenum);
     for (int i = loopBegin; i <= loopEnd; i++)
     {
-        if (loop_toggle % 2 == 0)
-            break;
         if (buff->lines[i][0] == 'm')
         {
-            osc.test(std::string(std::to_string(i) + " " + "is active"));
             std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[i]);
             osc.sendMonoNote(std::get<0>(curLineParsed), std::get<1>(curLineParsed), std::get<2>(curLineParsed));
         }
@@ -467,8 +458,10 @@ void Editor::runSeq()
             int exclamationIndex = buff->lines[i].find('!');
             string numberString = buff->lines[i].substr(exclamationIndex + 1);
             int number = stoi(numberString);
-            wait(number);
+            osc.wait(number);
         }
+        else if (loop_toggle % 2 == 0)
+            break;
         if (i == loopEnd)
         {
             i = loopBegin - 1;

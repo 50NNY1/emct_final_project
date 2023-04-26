@@ -237,7 +237,6 @@ void OSC::sendMacro(std::unordered_map<char, int> values, std::vector<float> gli
     lo_message_add_float(msg, glideTimes[7]);
     lo_send_message(target, ("/macro " + std::to_string(instancenum)).c_str(), msg);
     lo_message_free(msg);
-    this->wait(35);
 }
 
 int OSC::getNoteNumber(std::string noteName)
@@ -251,7 +250,7 @@ int OSC::getNoteNumber(std::string noteName)
     }
     else
     {
-        // Note name not found, return default value (C3)
+        // Note name not found, return default value C3
         return 48;
     }
 }
