@@ -103,7 +103,8 @@ int main(int argc, char *argv[])
     }
     else if (ch == ctrl('g') && popup.isActive())
     {
-      std::tuple<int, int, std::string> globParams = popup.getValues();
+      std::vector<int> globParams = popup.getValues();
+      address[1] = globParams[1];
       popup.toggle();
     }
     if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g') && !popup.isActive())

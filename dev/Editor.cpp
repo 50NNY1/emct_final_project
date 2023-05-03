@@ -474,3 +474,10 @@ void Editor::setAddress(std::string _address[])
     address[0] = _address[0];
     address[1] = _address[1];
 }
+
+void Editor::assignTime(std::vector<int> time_)
+{
+    int bpm = time_[0];
+    int beat = 60 / bpm * (time_[1] / 4);
+    time = {bpm, beat};
+}

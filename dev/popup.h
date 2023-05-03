@@ -10,7 +10,7 @@ public:
     Popup(int width, int height, int x, int y);
     bool isActive();
     void toggle();
-    std::tuple<int, int, std::string> getValues();
+    std::vector<int> getValues();
 
 private:
     void init_colors();
@@ -19,8 +19,7 @@ private:
     WINDOW *win;
     bool ison;
     int bpm;
-    int port;
-    std::string ip;
+    int numerator;
 };
 
 #endif

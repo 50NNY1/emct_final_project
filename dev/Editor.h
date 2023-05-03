@@ -18,6 +18,7 @@ private:
     char mode;
     bool raiseflag;
     std::string address[2];
+    std::vector<int> time;
     Buffer *buff;
     string status;
     string cmd;
@@ -53,6 +54,7 @@ public:
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
     void assignInstance(int instancenum_) { instancenum = instancenum_; }
+    void assignTime(std::vector<int> time_);
     void printBuff();
     void printStatusLine();
     void updateStatus();

@@ -5,7 +5,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/finalproj",
+            "program": "${workspaceFolder}/build/1-UP",
             "args": ["8080", "2"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

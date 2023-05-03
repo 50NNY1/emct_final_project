@@ -49,7 +49,7 @@ void Popup::show(const char *message)
     mvwgetnstr(win, row, 2, bpm_str, 10);
     noecho();
 
-    int bpm = atoi(bpm_str);
+    bpm = atoi(bpm_str);
     if (bpm < 0)
     {
         bpm = 0;
@@ -62,7 +62,7 @@ void Popup::show(const char *message)
     row += 2;
 
     // Display the port number input box
-    mvwprintw(win, row, 1, "Port number:");
+    mvwprintw(win, row, 1, "Numerator: (_/4)");
     row++;
     wattron(win, A_UNDERLINE);
     mvwhline(win, row, 1, ' ', 15);
@@ -70,44 +70,27 @@ void Popup::show(const char *message)
     wrefresh(win);
 
     // Get user input for port number
-    char port_str[10];
+    char numerator_str[1];
     echo();
-    mvwgetnstr(win, row, 2, port_str, 10);
+    mvwgetnstr(win, row, 2, numerator_str, 10);
     noecho();
 
-    int port = atoi(port_str);
-    if (port < 0)
+    numerator = atoi(numerator_str);
+    if (numerator < 0)
     {
-        port = 0;
+        numerator = 1;
     }
-    else if (port > 10000)
+    else if (numerator > 9)
     {
-        port = 10000;
+        numerator = 9;
     }
 
     row += 2;
 
-    // Display the IP address input box
-    mvwprintw(win, row, 1, "IP address:");
-    row++;
-    wattron(win, A_UNDERLINE);
-    mvwhline(win, row, 1, ' ', 20);
-    wattroff(win, A_UNDERLINE);
-    wrefresh(win);
-
-    // Get user input for IP address
-    char ip_str[20];
-    echo();
-    mvwgetnstr(win, row, 2, ip_str, 20);
-    noecho();
-
-    std::string ip(ip_str);
-
     // Display the input values
     werase(win);
     mvwprintw(win, 1, 1, "BPM: %d", bpm);
-    mvwprintw(win, 2, 1, "Port number: %d", port);
-    mvwprintw(win, 3, 1, "IP address: %s", ip_str);
+    mvwprintw(win, 2, 1, "Stress Points: %d", numerator);
     wrefresh(win);
 }
 
@@ -138,7 +121,7 @@ bool Popup::isActive()
     return ison;
 }
 
-std::tuple<int, int, std::string> Popup::getValues()
+std::vector<int> Popup::getValues()
 {
-    return std::make_tuple(bpm, port, ip);
+    return std::vector<int>{bpm, numerator};
 }
