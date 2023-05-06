@@ -409,18 +409,10 @@ bool Editor::execCmd()
         }
         for (int i = loopBegin; i <= loopEnd; i++)
         {
-            auto start = std::chrono::steady_clock::now(); // start the timer
             if (loop_toggle % 2 == 1)
             {
                 std::thread loopThread(&Editor::runSeq, this, i);
-                loopThread.detach();
-                // wait until the desired duration has elapsed
-                auto elapsed = std::chrono::steady_clock::now() - start;
-                while (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() < time[1])
-                {
-                    elapsed = std::chrono::steady_clock::now() - start;
-                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                }
+                loopThread.join();
             }
             if (i == loopEnd)
             {
@@ -450,19 +442,14 @@ void Editor::isActive(bool _active)
 
 void Editor::runSeq(int iteration)
 {
-    bool isRunning = false;
+    auto start = std::chrono::steady_clock::now(); // start the timer
     OSC osc(address, instancenum);
-
     if (buff->lines[iteration][0] == 'm')
     {
         std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[iteration]);
         osc.sendMonoNote(std::get<0>(curLineParsed),
                          std::get<1>(curLineParsed),
                          std::get<2>(curLineParsed));
-        // monoThread = std::thread(&OSC::sendMonoNote, osc,
-        //                          std::get<0>(curLineParsed),
-        //                          std::get<1>(curLineParsed),
-        //                          std::get<2>(curLineParsed));
     }
     else if (buff->lines[iteration][0] == 'p')
     {
@@ -470,10 +457,6 @@ void Editor::runSeq(int iteration)
         osc.sendPoly(std::get<0>(curLineParsed),
                      std::get<1>(curLineParsed),
                      std::get<2>(curLineParsed));
-        // polyThread = std::thread(&OSC::sendPoly, osc,
-        //                          std::get<0>(curLineParsed),
-        //                          std::get<1>(curLineParsed),
-        //                          std::get<2>(curLineParsed));
     }
     else if (buff->lines[iteration][0] == 'o')
     {
@@ -486,6 +469,16 @@ void Editor::runSeq(int iteration)
         string numberString = buff->lines[iteration].substr(exclamationIndex + 1);
         int number = stoi(numberString);
         osc.wait(number);
+    }
+    auto elapsed = std::chrono::steady_clock::now() - start;
+    while (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() < time[1])
+    {
+        elapsed = std::chrono::steady_clock::now() - start;
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() >= time[1])
+        {
+            break;
+        }
     }
 }
 
