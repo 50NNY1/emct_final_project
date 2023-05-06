@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
         ed.printBuff();
       }
     }
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < num_windows; i++)
     {
       wrefresh(windows[i]);
     }

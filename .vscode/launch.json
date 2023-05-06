@@ -1,28 +1,16 @@
 {
-    "version": "0.2.0",
     "configurations": [
-        {
-            "name": "(lldb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/1-UP",
-            "args": ["8080", "2"],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "lldb",
-            "logging": {
-                "moduleLoad": true,
-                "trace": true,
-                "traceResponse": false,
-                "engineLogging": true,
-                "exceptionLogging": true,
-                "programOutput": true,
-                "debugServer": 0,
-                "traceMessages": true,
-                "file": "${workspaceFolder}/debug.log"
-            }
-        }
+    {
+        "name": "(lldb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/1-UP",
+        "args": ["8080", "3"],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "environment": [],
+        "externalConsole": true,
+        "MIMode": "lldb"
+    }
     ]
 }

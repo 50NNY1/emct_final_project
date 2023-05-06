@@ -12,6 +12,8 @@
 class Editor
 {
 private:
+    int loopBegin = 0;
+    int loopEnd = 0;
     int x, y;
     int winx;
     int lowerbound;
@@ -39,6 +41,7 @@ private:
     void deleteLine();
     void deleteLine(int i);
     void saveFile();
+    int calculateBeat(std::vector<int> time);
 
 public:
     bool upstatus;
@@ -50,7 +53,7 @@ public:
         return mode;
     }
     void sendMsg();
-    void runSeq();
+    void runSeq(int iteration);
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
     void assignInstance(int instancenum_) { instancenum = instancenum_; }

@@ -75,7 +75,8 @@
     "filesystem": "cpp",
     "__verbose_abort": "cpp",
     "bit": "cpp",
-    "iomanip": "cpp"
+    "iomanip": "cpp",
+    "functional": "cpp"
   },
   "cmake.sourceDirectory": "${workspaceFolder}/dev",
   "C_Cpp.errorSquiggles": "disabled"
