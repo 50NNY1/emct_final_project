@@ -3,7 +3,6 @@
 #include <signal.h>
 #include <vector>
 #include "Editor.h"
-#include "popup.h"
 
 #define ctrl(x) ((x)&0x1f)
 
@@ -57,8 +56,6 @@ int main(int argc, char *argv[])
     editors[i].assignInstance(i + 1);
   }
 
-  Popup popup(40, 10, 10, 5);
-
   int activeWindow = 0;
   init_pair(1, COLOR_BLACK, COLOR_GREEN);
 
@@ -97,17 +94,8 @@ int main(int argc, char *argv[])
     {
       activeWindow = (activeWindow < num_instances - 1) ? activeWindow + 1 : num_instances - 1;
     }
-    else if (ch == ctrl('g'))
-    {
-      popup.toggle();
-    }
-    else if (ch == ctrl('g') && popup.isActive())
-    {
-      std::vector<int> globParams = popup.getValues();
-      address[1] = globParams[1];
-      popup.toggle();
-    }
-    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g') && !popup.isActive())
+
+    if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g'))
     {
       editors[activeWindow].handleInput(ch);
     }

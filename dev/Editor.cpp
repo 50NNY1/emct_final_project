@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "Euc.cpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -25,9 +26,8 @@ Editor::Editor()
     int ctrl_k = ctrl('k');
     std::string ctrl_k_str = "^" + std::to_string(ctrl_k + 64);
     loop_toggle = 0;
-    time = {140, 4};
-    int beat = calculateBeat(time);
-    time = {140, beat};
+    bpm = 120;
+    beat_dur = 60.0 / bpm;
 }
 Editor::Editor(WINDOW *win_) : win(win_)
 {
@@ -48,6 +48,8 @@ Editor::Editor(WINDOW *win_) : win(win_)
     int ctrl_k = ctrl('k');
     std::string ctrl_k_str = "^" + std::to_string(ctrl_k + 64);
     loop_toggle = 0;
+    bpm = 120;
+    beat_dur = 60.0 / bpm;
 }
 
 void Editor::updateStatus()
@@ -407,6 +409,15 @@ bool Editor::execCmd()
                 break;
             }
         }
+
+        // prepare euclidean sequence
+        int euc_subdiv = std::stoi(buff->lines[loopEnd].substr(2));
+        int euc_steps = (loopEnd - loopBegin) - 2;
+
+        EuclideanSequence seq(euc_subdiv, euc_steps, bpm);
+        std::vector<int> eucseq = seq.generateSequence();
+        std::vector<float> eucseq_dur = seq.generateDurations();
+
         for (int i = loopBegin; i <= loopEnd; i++)
         {
             if (loop_toggle % 2 == 1)
@@ -415,9 +426,7 @@ bool Editor::execCmd()
                 loopThread.join();
             }
             if (i == loopEnd)
-            {
                 i = loopBegin;
-            }
         }
     }
     else if (cmd == "t")
@@ -425,12 +434,16 @@ bool Editor::execCmd()
         OSC osc(address, instancenum);
         osc.test(buff->lines[y]);
     }
+    else if (cmd[0] == 'b')
+    {
+        bpm = std::stoi(cmd.substr(1));
+        beat_dur = 60.0 / bpm;
+    }
     else
     {
         status = "Error: Command not found!";
         return false;
     }
-
     cmd = "";    // Reset command buffer
     return true; // Returns if command has executed successfully
 }
@@ -440,42 +453,46 @@ void Editor::isActive(bool _active)
     active = _active;
 }
 
-void Editor::runSeq(int iteration)
+void Editor::runSeq(int iteration, bool isToPlay, float beat_dur)
 {
+
     auto start = std::chrono::steady_clock::now(); // start the timer
     OSC osc(address, instancenum);
-    if (buff->lines[iteration][0] == 'm')
+    if (isToPlay)
     {
-        std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[iteration]);
-        osc.sendMonoNote(std::get<0>(curLineParsed),
+        if (buff->lines[iteration][0] == 'm')
+        {
+            std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[iteration]);
+            osc.sendMonoNote(std::get<0>(curLineParsed),
+                             std::get<1>(curLineParsed),
+                             std::get<2>(curLineParsed));
+        }
+        else if (buff->lines[iteration][0] == 'p')
+        {
+            std::tuple<std::vector<int>, std::vector<float>, float> curLineParsed = osc.parsePoly(buff->lines[iteration]);
+            osc.sendPoly(std::get<0>(curLineParsed),
                          std::get<1>(curLineParsed),
                          std::get<2>(curLineParsed));
-    }
-    else if (buff->lines[iteration][0] == 'p')
-    {
-        std::tuple<std::vector<int>, std::vector<float>, float> curLineParsed = osc.parsePoly(buff->lines[iteration]);
-        osc.sendPoly(std::get<0>(curLineParsed),
-                     std::get<1>(curLineParsed),
-                     std::get<2>(curLineParsed));
-    }
-    else if (buff->lines[iteration][0] == 'o')
-    {
-        std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[iteration]);
-        osc.sendMacro(std::get<0>(curLineParsed), std::get<1>(curLineParsed));
-    }
-    else if (buff->lines[iteration][0] == 'w')
-    {
-        int exclamationIndex = buff->lines[iteration].find('!');
-        string numberString = buff->lines[iteration].substr(exclamationIndex + 1);
-        int number = stoi(numberString);
-        osc.wait(number);
+        }
+        else if (buff->lines[iteration][0] == 'o')
+        {
+            std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[iteration]);
+            osc.sendMacro(std::get<0>(curLineParsed), std::get<1>(curLineParsed));
+        }
+        else if (buff->lines[iteration][0] == 'w')
+        {
+            int exclamationIndex = buff->lines[iteration].find('!');
+            string numberString = buff->lines[iteration].substr(exclamationIndex + 1);
+            int number = stoi(numberString);
+            osc.wait(number);
+        }
     }
     auto elapsed = std::chrono::steady_clock::now() - start;
-    while (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() < time[1])
+    while (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() < beat_dur)
     {
         elapsed = std::chrono::steady_clock::now() - start;
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() >= time[1])
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() >= beat_dur)
         {
             break;
         }
@@ -486,18 +503,4 @@ void Editor::setAddress(std::string _address[])
 {
     address[0] = _address[0];
     address[1] = _address[1];
-}
-
-void Editor::assignTime(std::vector<int> time_)
-{
-    int bpm = time_[0];
-    int beat = 60 / bpm * (time_[1] / 4);
-    time = {bpm, beat};
-}
-
-int Editor::calculateBeat(std::vector<int> time_)
-{
-    int bpm = time_[0];
-    int beat = 60 / bpm * (time_[1] / 4);
-    return beat;
 }

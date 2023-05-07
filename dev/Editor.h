@@ -20,7 +20,6 @@ private:
     char mode;
     bool raiseflag;
     std::string address[2];
-    std::vector<int> time;
     Buffer *buff;
     string status;
     string cmd;
@@ -31,6 +30,8 @@ private:
     int loop_toggle;
     int instancenum;
     bool isLooping;
+    int bpm;
+    float beat_dur;
 
     string tos(int);
     bool execCmd();
@@ -41,7 +42,6 @@ private:
     void deleteLine();
     void deleteLine(int i);
     void saveFile();
-    int calculateBeat(std::vector<int> time);
 
 public:
     bool upstatus;
@@ -53,7 +53,7 @@ public:
         return mode;
     }
     void sendMsg();
-    void runSeq(int iteration);
+    void runSeq(int iteration, bool isToPlay, float beat_dur);
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
     void assignInstance(int instancenum_) { instancenum = instancenum_; }
