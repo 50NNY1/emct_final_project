@@ -392,41 +392,47 @@ bool Editor::execCmd()
     }
     else if (cmd == "k")
     {
+
         loop_toggle++;
-        for (int i = y; i >= 0; i--)
+        if (buff->lines.size() > 1 |
+                buff->lines.size() > 1 &&
+            buff->lines[0] != "")
         {
-            if (buff->lines[i][0] == '(')
+            for (int i = y; i >= 0; i--)
             {
-                loopBegin = i;
-                break;
+                if (buff->lines[i][0] == '(')
+                {
+                    loopBegin = i;
+                    break;
+                }
             }
-        }
-        for (int i = loopBegin; i < buff->lines.size(); i++)
-        {
-            if (buff->lines[i][0] == ')')
+            for (int i = loopBegin; i < buff->lines.size(); i++)
             {
-                loopEnd = i;
-                break;
+                if (buff->lines[i][0] == ')')
+                {
+                    loopEnd = i;
+                    break;
+                }
             }
-        }
 
-        // prepare euclidean sequence
-        int euc_subdiv = std::stoi(buff->lines[loopEnd].substr(2));
-        int euc_steps = (loopEnd - loopBegin) - 2;
+            // prepare euclidean sequence
+            int euc_subdiv = std::stoi(buff->lines[loopEnd].substr(2));
+            int euc_steps = (loopEnd - loopBegin) - 2;
 
-        EuclideanSequence seq(euc_steps, euc_subdiv, bpm);
-        std::vector<int> eucseq = seq.generateSequence();
-        std::vector<float> eucseq_dur = seq.generateDurations();
+            EuclideanSequence seq(euc_steps, euc_subdiv, bpm);
+            std::vector<int> eucseq = seq.generateSequence();
+            std::vector<float> eucseq_dur = seq.generateDurations();
 
-        for (int i = loopBegin; i <= loopEnd; i++)
-        {
-            if (loop_toggle % 2 == 1)
+            for (int i = loopBegin; i <= loopEnd; i++)
             {
-                std::thread loopThread(&Editor::runSeq, this, i, eucseq[i], eucseq_dur[i]);
-                loopThread.join();
+                if (loop_toggle % 2 == 1)
+                {
+                    std::thread loopThread(&Editor::runSeq, this, i, eucseq[i], eucseq_dur[i]);
+                    loopThread.join();
+                }
+                if (i == loopEnd)
+                    i = loopBegin;
             }
-            if (i == loopEnd)
-                i = loopBegin;
         }
     }
     else if (cmd == "t")
