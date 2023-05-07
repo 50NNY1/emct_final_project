@@ -414,7 +414,7 @@ bool Editor::execCmd()
         int euc_subdiv = std::stoi(buff->lines[loopEnd].substr(2));
         int euc_steps = (loopEnd - loopBegin) - 2;
 
-        EuclideanSequence seq(euc_subdiv, euc_steps, bpm);
+        EuclideanSequence seq(euc_steps, euc_subdiv, bpm);
         std::vector<int> eucseq = seq.generateSequence();
         std::vector<float> eucseq_dur = seq.generateDurations();
 
@@ -422,7 +422,7 @@ bool Editor::execCmd()
         {
             if (loop_toggle % 2 == 1)
             {
-                std::thread loopThread(&Editor::runSeq, this, i);
+                std::thread loopThread(&Editor::runSeq, this, i, eucseq[i], eucseq_dur[i]);
                 loopThread.join();
             }
             if (i == loopEnd)
