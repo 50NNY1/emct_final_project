@@ -54,6 +54,7 @@ public:
     }
     void sendMsg();
     void runSeq(int iteration, bool isToPlay, float beat_dur);
+    void runSeq_thread();
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }
     void assignInstance(int instancenum_) { instancenum = instancenum_; }
