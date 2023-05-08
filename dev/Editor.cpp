@@ -508,8 +508,11 @@ void Editor::runSeq_thread()
         {
             if (loop_toggle % 2 == 1)
             {
-                std::thread loopThread(&Editor::runSeq, this, i, eucseq[i], eucseq_dur[i]);
-                loopThread.join();
+                if (buff->lines[i][0] != '#')
+                {
+                    std::thread loopThread(&Editor::runSeq, this, i, eucseq[i], eucseq_dur[i]);
+                    loopThread.join();
+                }
             }
             if (i == loopEnd)
                 i = loopBegin;
