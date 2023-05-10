@@ -23,6 +23,7 @@ private:
     Buffer *buff;
     string status;
     string cmd;
+    int jargon_toggle;
     string filename;
     bool active;
     WINDOW *win;
@@ -32,6 +33,7 @@ private:
     bool isLooping;
     int bpm;
     float beat_dur;
+    std::vector<OSC *> oscs;
 
     string tos(int);
     bool execCmd();
@@ -42,6 +44,12 @@ private:
     void deleteLine();
     void deleteLine(int i);
     void saveFile();
+
+    void jargonToggle()
+    {
+        for (int i = 0; i < oscs.size(); i++)
+            oscs[i]->incrementJargon();
+    }
 
 public:
     bool upstatus;

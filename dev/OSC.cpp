@@ -8,7 +8,7 @@
 #include <chrono>
 #include <unordered_map>
 
-OSC::OSC(std::string *addressPort, int instancenum_)
+OSC::OSC(std::string *addressPort, int instancenum_, int jargon_toggle)
 {
     std::string address = *(addressPort);
     std::string port = *(addressPort + 1);
@@ -18,7 +18,8 @@ OSC::OSC(std::string *addressPort, int instancenum_)
 
 void OSC::sendMonoNote(int _note, float _velocity, float duration)
 {
-    // std::cerr << "HELL" << std::endl;
+    if (jargon_toggle % 2 == 1)
+        std::cerr << "###################" << std::endl;
     lo_message msg = lo_message_new();
     lo_message_add_int32(msg, _note);
     float velocity;
@@ -29,10 +30,13 @@ void OSC::sendMonoNote(int _note, float _velocity, float duration)
     else
         velocity = _velocity;
     lo_message_add_float(msg, velocity);
-    std::cerr << "pls work" << std::endl;
+    if (jargon_toggle % 2 == 1)
+        std::cerr << "±±" << std::endl;
     lo_send_message(target, ("/noteon " + std::to_string(instancenum)).c_str(), msg);
     lo_message_free(msg);
     this->wait(duration);
+    if (jargon_toggle % 2 == 1)
+        std::cerr << ".;;***>" << std::endl;
     lo_message msg1 = lo_message_new();
     lo_message_add_int32(msg1, _note);
     lo_message_add_float(msg1, 0.0);
@@ -42,7 +46,6 @@ void OSC::sendMonoNote(int _note, float _velocity, float duration)
 
 void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float duration)
 {
-
     // bound test for velocity
     for (int i = 0; i < velocities.size(); i++)
     {
@@ -52,12 +55,15 @@ void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float 
             velocities[i] = 0;
         else
             velocities[i] = velocities[i];
+        std::cerr << i << std::endl;
     }
     lo_message msg = lo_message_new();
     for (int i = 0; i < notes.size(); i++)
     {
         lo_message_add_int32(msg, notes[i]);
         lo_message_add_float(msg, velocities[i]);
+        if (jargon_toggle % 2 == 1)
+            std::cerr << "*" << std::endl;
     }
 
     lo_send_message(target, ("/midi/chord " + std::to_string(instancenum)).c_str(), msg);
@@ -67,7 +73,10 @@ void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float 
     {
         lo_message_add_int32(msg1, notes[i]);
         lo_message_add_float(msg1, 0.0);
+        std::cerr << "0" << std::endl;
     }
+    if (jargon_toggle % 2 == 1)
+        std::cerr << "space echos like an immense tomb" << std::endl;
     lo_send_message(target, ("/midi/chord " + std::to_string(instancenum)).c_str(), msg1);
     lo_message_free(msg);
     lo_message_free(msg1);
@@ -93,6 +102,8 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
         while ((pos = string.find('/', pos)) != std::string::npos)
         {
             slashIndicies.push_back(pos);
+            if (jargon_toggle % 2 == 1)
+                std::cerr << pos << std::endl;
             pos++;
         }
     }
@@ -106,6 +117,7 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
     while (std::getline(notes_ss, temp, ','))
     {
         notes.push_back(getNoteNumber(temp));
+        std::cerr << temp << std::endl;
     };
     while (std::getline(velocities_ss, temp, ','))
     {
@@ -118,6 +130,8 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
         velocities.clear();
         for (int i = 0; i < notes.size(); i++)
         {
+            if (jargon_toggle % 2 == 1)
+                std::cerr << i << std::endl;
             velocities.push_back(velocity);
         }
     }
@@ -138,6 +152,8 @@ std::tuple<int, float, float> OSC::parseMono(std::string string)
         while ((pos = string.find('/', pos)) != std::string::npos)
         {
             slashIndicies.push_back(pos);
+            if (jargon_toggle % 2 == 1)
+                std::cerr << pos << std::endl;
             pos++;
         }
     }
@@ -145,6 +161,8 @@ std::tuple<int, float, float> OSC::parseMono(std::string string)
     note = getNoteNumber(noteString);
     velocity = std::stof(string.substr(slashIndicies[1] + 1, slashIndicies[2] - slashIndicies[1] - 1));
     duration = std::stof(string.substr(slashIndicies[2] + 1, exclaimIndex - slashIndicies[2] - 1));
+    if (jargon_toggle % 2 == 1)
+        std::cerr << "What if knowledge were a means to deepen unknowing?" << std::endl;
     return std::make_tuple(note, velocity, duration);
 }
 
@@ -213,6 +231,8 @@ std::tuple<std::unordered_map<char, int>, std::vector<float>> OSC::parseMacro(st
 
     while (std::getline(glideTimes_ss, temp, ','))
     {
+        if (jargon_toggle % 2 == 1)
+            std::cerr << temp << std::endl;
         glideTimes.push_back(std::stof(temp));
     }
     return std::make_tuple(macros_map, glideTimes);
@@ -238,6 +258,8 @@ void OSC::sendMacro(std::unordered_map<char, int> values, std::vector<float> gli
     lo_message_add_float(msg, glideTimes[6]);
     lo_message_add_float(msg, glideTimes[7]);
     lo_send_message(target, ("/macro " + std::to_string(instancenum)).c_str(), msg);
+    if (jargon_toggle % 2 == 1)
+        std::cerr << "../" << std::endl;
     lo_message_free(msg);
 }
 
@@ -249,6 +271,7 @@ int OSC::getNoteNumber(std::string noteName)
     if (it != noteMap.end())
     {
         return it->second;
+        std::cerr << it->first << std::endl;
     }
     else
     {

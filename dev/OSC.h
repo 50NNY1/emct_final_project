@@ -8,7 +8,7 @@
 class OSC
 {
 public:
-    OSC(std::string *addressPort, int instancenum_);
+    OSC(std::string *addressPort, int instancenum_, int jargon_toggle_);
     void sendMonoNote(int note, float velocity, float duration);
     void sendPoly(std::vector<int> notes, std::vector<float> velocities, float duration);
     void sendMacro(std::unordered_map<char, int> values, std::vector<float> velocities);
@@ -19,10 +19,12 @@ public:
     float getBeatMs(std::string fraction);
     void test(std::string string);
     void wait(int duration);
+    void incrementJargon() { jargon_toggle++; };
 
 private:
     lo_address target;
     int instancenum;
+    int jargon_toggle = 0;
 };
 
 #endif

@@ -28,6 +28,7 @@ Editor::Editor()
     loop_toggle = 0;
     bpm = 120;
     beat_dur = 60.0 / bpm;
+    jargon_toggle = 0;
 }
 Editor::Editor(WINDOW *win_) : win(win_)
 {
@@ -50,6 +51,7 @@ Editor::Editor(WINDOW *win_) : win(win_)
     loop_toggle = 0;
     bpm = 120;
     beat_dur = 60.0 / bpm;
+    jargon_toggle = 0;
 }
 
 void Editor::updateStatus()
@@ -202,29 +204,35 @@ void Editor::sendMsg()
 {
     if (buff->lines[y][0] == 'm')
     {
-        OSC osc(address, instancenum);
+        OSC osc(address, instancenum, jargon_toggle);
+        oscs.push_back(&osc);
         std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[y]);
         std::thread oscT1(&OSC::sendMonoNote, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed),
                           std::get<2>(curLineParsed));
+        oscs.pop_back();
         oscT1.detach();
     }
     else if (buff->lines[y][0] == 'p')
     {
-        OSC osc(address, instancenum);
+        OSC osc(address, instancenum, jargon_toggle);
+        oscs.push_back(&osc);
         std::tuple<std::vector<int>, std::vector<float>, float>
             curLineParsed = osc.parsePoly(buff->lines[y]);
         std::thread oscT2(&OSC::sendPoly, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed),
                           std::get<2>(curLineParsed));
+        oscs.pop_back();
         oscT2.detach();
     }
     else if (buff->lines[y][0] == 'o')
     {
-        OSC osc(address, instancenum);
+        OSC osc(address, instancenum, jargon_toggle);
+        oscs.push_back(&osc);
         std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[y]);
         std::thread oscT3(&OSC::sendMacro, osc, std::get<0>(curLineParsed),
                           std::get<1>(curLineParsed));
+        oscs.pop_back();
         oscT3.detach();
     }
 }
@@ -396,9 +404,13 @@ bool Editor::execCmd()
         std::thread seq_thread(&Editor::runSeq_thread, this);
         seq_thread.detach();
     }
+    else if (cmd == "j")
+    {
+        jargonToggle();
+    }
     else if (cmd == "t")
     {
-        OSC osc(address, instancenum);
+        OSC osc(address, instancenum, jargon_toggle);
         osc.test(buff->lines[y]);
     }
     else if (cmd[0] == 'b')
@@ -422,7 +434,6 @@ void Editor::isActive(bool _active)
 
 void Editor::runSeq(int iteration, bool isToPlay, float beat_dur, OSC &osc)
 {
-
     auto start = std::chrono::steady_clock::now(); // start the timer
     if (isToPlay)
     {
@@ -474,7 +485,8 @@ void Editor::setAddress(std::string _address[])
 void Editor::runSeq_thread()
 {
     loop_toggle++;
-    OSC osc = OSC(address, instancenum);
+    OSC osc = OSC(address, instancenum, jargon_toggle);
+    oscs.push_back(&osc);
     if (buff->lines.size() > 1 |
             buff->lines.size() > 1 &&
         buff->lines[0] != "")
@@ -516,6 +528,6 @@ void Editor::runSeq_thread()
             if (i == loopEnd)
                 i = loopBegin;
         }
-        // }
+        oscs.pop_back();
     }
 }
