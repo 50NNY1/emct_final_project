@@ -53,7 +53,7 @@ public:
         return mode;
     }
     void sendMsg();
-    void runSeq(int iteration, bool isToPlay, float beat_dur);
+    void runSeq(int iteration, bool isToPlay, float beat_dur, OSC &osc);
     void runSeq_thread();
     void handleInput(int);
     void assignWindow(WINDOW *win_) { win = win_; }

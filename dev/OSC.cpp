@@ -18,6 +18,7 @@ OSC::OSC(std::string *addressPort, int instancenum_)
 
 void OSC::sendMonoNote(int _note, float _velocity, float duration)
 {
+    // std::cerr << "HELL" << std::endl;
     lo_message msg = lo_message_new();
     lo_message_add_int32(msg, _note);
     float velocity;
@@ -28,6 +29,7 @@ void OSC::sendMonoNote(int _note, float _velocity, float duration)
     else
         velocity = _velocity;
     lo_message_add_float(msg, velocity);
+    std::cerr << "pls work" << std::endl;
     lo_send_message(target, ("/noteon " + std::to_string(instancenum)).c_str(), msg);
     lo_message_free(msg);
     this->wait(duration);

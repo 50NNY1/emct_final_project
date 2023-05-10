@@ -420,15 +420,15 @@ void Editor::isActive(bool _active)
     active = _active;
 }
 
-void Editor::runSeq(int iteration, bool isToPlay, float beat_dur)
+void Editor::runSeq(int iteration, bool isToPlay, float beat_dur, OSC &osc)
 {
 
     auto start = std::chrono::steady_clock::now(); // start the timer
-    OSC osc(address, instancenum);
     if (isToPlay)
     {
         if (buff->lines[iteration][0] == 'm')
         {
+            // std::cerr << "Mono" << std::endl;
             std::tuple<int, float, float> curLineParsed = osc.parseMono(buff->lines[iteration]);
             osc.sendMonoNote(std::get<0>(curLineParsed),
                              std::get<1>(curLineParsed),
@@ -436,6 +436,7 @@ void Editor::runSeq(int iteration, bool isToPlay, float beat_dur)
         }
         else if (buff->lines[iteration][0] == 'p')
         {
+            // std::cerr << "Poly" << std::endl;
             std::tuple<std::vector<int>, std::vector<float>, float> curLineParsed = osc.parsePoly(buff->lines[iteration]);
             osc.sendPoly(std::get<0>(curLineParsed),
                          std::get<1>(curLineParsed),
@@ -443,11 +444,13 @@ void Editor::runSeq(int iteration, bool isToPlay, float beat_dur)
         }
         else if (buff->lines[iteration][0] == 'o')
         {
+            // std::cerr << "Macro" << std::endl;
             std::tuple<std::unordered_map<char, int>, std::vector<float>> curLineParsed = osc.parseMacro(buff->lines[iteration]);
             osc.sendMacro(std::get<0>(curLineParsed), std::get<1>(curLineParsed));
         }
         else if (buff->lines[iteration][0] == 'w')
         {
+            // std::cerr << "Wait" << std::endl;
             int exclamationIndex = buff->lines[iteration].find('!');
             string numberString = buff->lines[iteration].substr(exclamationIndex + 1);
             int number = stoi(numberString);
@@ -455,14 +458,10 @@ void Editor::runSeq(int iteration, bool isToPlay, float beat_dur)
         }
     }
     auto elapsed = std::chrono::steady_clock::now() - start;
-    while (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() < beat_dur)
+    auto remaining = std::chrono::milliseconds(static_cast<long long>(beat_dur)) - std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
+    if (remaining > std::chrono::milliseconds(0))
     {
-        elapsed = std::chrono::steady_clock::now() - start;
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() >= beat_dur)
-        {
-            break;
-        }
+        std::this_thread::sleep_for(remaining);
     }
 }
 
@@ -475,6 +474,7 @@ void Editor::setAddress(std::string _address[])
 void Editor::runSeq_thread()
 {
     loop_toggle++;
+    OSC osc = OSC(address, instancenum);
     if (buff->lines.size() > 1 |
             buff->lines.size() > 1 &&
         buff->lines[0] != "")
@@ -504,18 +504,18 @@ void Editor::runSeq_thread()
         std::vector<int> eucseq = seq.generateSequence();
         std::vector<float> eucseq_dur = seq.generateDurations();
 
+        // if (loop_toggle % 2 == 1)
+        // {
         for (int i = loopBegin; i <= loopEnd; i++)
         {
-            if (loop_toggle % 2 == 1)
+
+            if (buff->lines[i][0] != '#')
             {
-                if (buff->lines[i][0] != '#')
-                {
-                    std::thread loopThread(&Editor::runSeq, this, i, eucseq[i], eucseq_dur[i]);
-                    loopThread.join();
-                }
+                runSeq(i, eucseq[i], eucseq_dur[i], osc);
             }
             if (i == loopEnd)
                 i = loopBegin;
         }
+        // }
     }
 }

@@ -59,25 +59,31 @@ int main(int argc, char *argv[])
   int activeWindow = 0;
   init_pair(1, COLOR_BLACK, COLOR_GREEN);
 
+  std::vector<Editor *> editors_ptrs;
+  for (int i = 0; i < num_windows; i++)
+  {
+    editors_ptrs.push_back(&editors[i]);
+  }
+
   while (true)
   {
     for (int i = 0; i < editors.size(); i++)
     {
       if (i == activeWindow)
-        editors[i].isActive(true);
+        editors_ptrs[i]->isActive(true);
       else
-        editors[i].isActive(false);
+        editors_ptrs[i]->isActive(false);
     }
     for (int i = 0; i < num_windows; i++)
     {
-      Editor &ed = editors[i];
+      Editor *ed = editors_ptrs[i];
       WINDOW *win = windows[i];
-      if (ed.getMode() != 'x')
+      if (ed->getMode() != 'x')
       {
-        if (ed.upstatus)
-          ed.updateStatus();
-        ed.printStatusLine();
-        ed.printBuff();
+        if (ed->upstatus)
+          ed->updateStatus();
+        ed->printStatusLine();
+        ed->printBuff();
       }
     }
     for (int i = 0; i < num_windows; i++)
@@ -97,7 +103,7 @@ int main(int argc, char *argv[])
 
     if (ch != ctrl('l') && ch != ctrl('h') && ch != ctrl('g'))
     {
-      editors[activeWindow].handleInput(ch);
+      editors_ptrs[activeWindow]->handleInput(ch);
     }
   }
 
