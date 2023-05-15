@@ -77,9 +77,12 @@ int main(int argc, char *argv[])
     for (int i = 0; i < num_windows; i++)
     {
       Editor *ed = editors_ptrs[i];
-      WINDOW *win = windows[i];
       if (ed->getMode() != 'x')
       {
+        /*code here referenced from
+        NCURSES Terminal Text Editor Tutorial Part 1 - 4 (2015) Cheuk’s Blog.
+        Available at: https://cheuksblog.ca/2015-02-01-ncurses-editor-tutorial-01/ (Accessed: 1 March 2023).
+        */
         if (ed->upstatus)
           ed->updateStatus();
         ed->printStatusLine();

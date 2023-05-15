@@ -1,3 +1,6 @@
+/*full citation:
+NCURSES Terminal Text Editor Tutorial Part 1 - 4 (2015) Cheuk’s Blog. Available at: https://cheuksblog.ca/2015-02-01-ncurses-editor-tutorial-01/ (Accessed: 1 March 2023).
+*/
 #ifndef BUFFER_H
 #define BUFFER_H
 

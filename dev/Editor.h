@@ -1,3 +1,6 @@
+/*code adapated from the Editor class in:
+NCURSES Terminal Text Editor Tutorial Part 1 - 4 (2015) Cheuk’s Blog. Available at: https://cheuksblog.ca/2015-02-01-ncurses-editor-tutorial-01/ (Accessed: 1 March 2023).
+*/
 #ifndef EDITOR_H
 #define EDITOR_H
 
@@ -26,13 +29,13 @@ private:
     int jargon_toggle;
     string filename;
     bool active;
+    float beat_dur;
     WINDOW *win;
     std::string ctrl_k_str;
     int loop_toggle;
     int instancenum;
     bool isLooping;
     int bpm;
-    float beat_dur;
     std::vector<OSC *> oscs;
 
     string tos(int);
@@ -45,11 +48,7 @@ private:
     void deleteLine(int i);
     void saveFile();
 
-    void jargonToggle()
-    {
-        for (int i = 0; i < oscs.size(); i++)
-            oscs[i]->incrementJargon();
-    }
+    void jargonToggle() { jargon_toggle++; }
 
 public:
     bool upstatus;

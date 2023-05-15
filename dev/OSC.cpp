@@ -55,7 +55,8 @@ void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float 
             velocities[i] = 0;
         else
             velocities[i] = velocities[i];
-        std::cerr << i << std::endl;
+        if (jargon_toggle % 2 == 1)
+            std::cerr << i << std::endl;
     }
     lo_message msg = lo_message_new();
     for (int i = 0; i < notes.size(); i++)
@@ -73,7 +74,8 @@ void OSC::sendPoly(std::vector<int> notes, std::vector<float> velocities, float 
     {
         lo_message_add_int32(msg1, notes[i]);
         lo_message_add_float(msg1, 0.0);
-        std::cerr << "0" << std::endl;
+        if (jargon_toggle % 2 == 1)
+            std::cerr << "0" << std::endl;
     }
     if (jargon_toggle % 2 == 1)
         std::cerr << "space echos like an immense tomb" << std::endl;
@@ -117,7 +119,8 @@ std::tuple<std::vector<int>, std::vector<float>, float> OSC::parsePoly(std::stri
     while (std::getline(notes_ss, temp, ','))
     {
         notes.push_back(getNoteNumber(temp));
-        std::cerr << temp << std::endl;
+        if (jargon_toggle % 2 == 1)
+            std::cerr << temp << std::endl;
     };
     while (std::getline(velocities_ss, temp, ','))
     {
@@ -271,7 +274,8 @@ int OSC::getNoteNumber(std::string noteName)
     if (it != noteMap.end())
     {
         return it->second;
-        std::cerr << it->first << std::endl;
+        if (jargon_toggle % 2 == 1)
+            std::cerr << it->first << std::endl;
     }
     else
     {
