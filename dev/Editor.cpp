@@ -515,7 +515,7 @@ void Editor::runSeq_thread()
                     auto start = std::chrono::steady_clock::now(); // start the timer
                     runSeq(i, eucseq[i], eucseq_dur[i], osc);
                     auto elapsed = std::chrono::steady_clock::now() - start;
-                    auto remaining = std::chrono::milliseconds(static_cast<long long>(eucseq_dur[i] * 1000)) - std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
+                    auto remaining = std::chrono::milliseconds(static_cast<long long>((eucseq_dur[i] * 1000) / 4.)) - std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
                     if (remaining > std::chrono::milliseconds(0))
                     {
                         std::this_thread::sleep_for(remaining);

@@ -212,7 +212,7 @@ std::tuple<std::unordered_map<char, int>, std::vector<float>> OSC::parseMacro(st
     macros_str.erase(std::remove(macros_str.begin(), macros_str.end(), ';'), macros_str.end());
     macros_str.erase(std::remove(macros_str.begin(), macros_str.end(), ','), macros_str.end());
 
-    while (std::getline(macros_ss, temp, ' '))
+    while (std::getline(macros_ss, temp, ','))
     {
         char letter = temp[0];
         int value;
