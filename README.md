@@ -1,5 +1,6 @@
 # 1-UP
 Live coding environment, built harboring simplicity and portability. Built with the beginner in mind - to break out of standard frameworks and notational systems of music.
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/rxSMlCvyqCE/0.jpg)](https://www.youtube.com/watch?v=rxSMlCvyqCE "Video Title")
 
 ## Usage
 1. Download the latest release
